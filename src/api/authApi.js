@@ -10,6 +10,7 @@ export const authApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+
     verifyCode: builder.mutation({
       query: (code) => ({
         url: '/auth/verify',
@@ -17,6 +18,7 @@ export const authApi = baseApi.injectEndpoints({
         body: { code },
       }),
     }),
+
     login: builder.mutation({
       query: (data) => ({
         url: '/auth/login',
@@ -35,6 +37,7 @@ export const authApi = baseApi.injectEndpoints({
 
       invalidatesTags: ['User'],
     }),
+
     getProfile: builder.query({
       query: () => '/auth/profile',
 
@@ -49,6 +52,7 @@ export const authApi = baseApi.injectEndpoints({
 
       providesTags: ['User'],
     }),
+
     logout: builder.mutation({
       query: () => ({
         url: '/auth/logout',
@@ -64,6 +68,7 @@ export const authApi = baseApi.injectEndpoints({
         }
       },
     }),
+
     refresh: builder.query({
       query: () => '/auth/refresh',
     }),

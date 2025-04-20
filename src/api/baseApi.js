@@ -5,8 +5,8 @@ const baseUrl = import.meta.env.VITE_API_URL
 
 const baseQuery = fetchBaseQuery({
   baseUrl,
-  prepareHeaders: (headers) => {
-    const accessToken = localStorage.getItem('accessToken')
+  prepareHeaders: (headers, { getState }) => {
+    const accessToken = getState().authSlice.accessToken
     if (accessToken) headers.set('Authorization', `Bearer ${accessToken}`)
     return headers
   },
