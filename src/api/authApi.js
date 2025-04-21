@@ -20,10 +20,10 @@ export const authApi = baseApi.injectEndpoints({
     }),
 
     login: builder.mutation({
-      query: (data) => ({
+      query: ({ email, password }) => ({
         url: '/auth/login',
         method: 'POST',
-        body: data,
+        body: { email, password },
       }),
 
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {

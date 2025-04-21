@@ -8,28 +8,28 @@ import Verify from '../components/pages/Verify'
 export const router = createBrowserRouter([
   {
     path: '/',
-    Component: AppLayout,
+    Component: App,
     children: [
       {
         path: '/',
-        Component: App,
-      },
-    ],
-  },
-  {
-    path: 'login',
-    Component: Login,
-  },
-  {
-    path: 'register',
-    children: [
-      {
-        index: true,
-        Component: Register,
+        Component: AppLayout,
       },
       {
-        path: 'verify',
-        Component: Verify,
+        path: 'login',
+        Component: Login,
+      },
+      {
+        path: 'register',
+        children: [
+          {
+            index: true,
+            Component: Register,
+          },
+          {
+            path: 'verify',
+            Component: Verify,
+          },
+        ],
       },
     ],
   },

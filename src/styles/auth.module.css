@@ -63,6 +63,22 @@ input:focus {
   font-weight: 600;
   font-size: 1.125rem;
   margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.submit-button img {
+  animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .secondary-button {
@@ -85,4 +101,20 @@ input:focus {
   color: var(--color-light-black);
   background-color: var(--color-dark-white);
   border: 0.5px solid var(--color-dark-white);
+}
+
+.inputs-error input {
+  border: 1px solid var(--color-dangerous);
+}
+
+.error {
+  margin-bottom: 0.75rem;
+}
+
+.error p {
+  color: var(--color-dangerous);
+}
+
+p.loading {
+  margin-bottom: 0.75rem;
 }

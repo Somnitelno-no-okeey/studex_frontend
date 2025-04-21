@@ -1,15 +1,18 @@
 import React, { useState } from 'react'
+import eyeIcon from '../../../assets/icons/eye.svg'
+import eyeSlashIcon from '../../../assets/icons/eye-slash.svg'
 import styles from '../../../styles/input-password.module.css'
 
-export default function InputPassword() {
+export default function InputPassword({ textContent, setPassword, value }) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
   return (
     <div className={styles['password-container']}>
       <input
         type={isPasswordVisible ? 'text' : 'password'}
-        name="password"
-        placeholder="Пароль"
+        placeholder={textContent}
+        onChange={(evt) => setPassword(evt.target.value)}
+        value={value}
         required
       />
       <button
@@ -17,13 +20,7 @@ export default function InputPassword() {
         onClick={() => setIsPasswordVisible(!isPasswordVisible)}
         className={styles['eye-button']}
       >
-        <img
-          src={
-            isPasswordVisible
-              ? 'src/assets/icons/eye-slash.svg'
-              : 'src/assets/icons/eye.svg'
-          }
-        />
+        <img src={isPasswordVisible ? eyeSlashIcon : eyeIcon} />
       </button>
     </div>
   )
