@@ -1,0 +1,22 @@
+:root {
+  --color-main: #254ca9;
+  --color-light-main: #7fade0;
+  --color-light-black: #333333;
+  --color-dangerous: #ef302b;
+  --color-gray: #666666;
+  --color-light-gray: #8b96a6;
+  --color-ultra-light-gray: #dddddd;
+  --color-black: #111111;
+  --color-white: #ffffff;
+  --color-dark-white: #f6f6f6;
+
+  --radius-XXS: 4px;
+  --radius-XS: 8px;
+  --radius-S: 12px;
+  --radius-M: 16px;
+  --radius-L: 24px;
+  --radius-XL: 32px;
+  --radius-XXL: 40px;
+
+  --transition: all 0.2s ease-in-out;
+}
