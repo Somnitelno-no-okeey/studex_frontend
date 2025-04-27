@@ -3,7 +3,6 @@ import Login from '../components/pages/Login'
 import Register from '../components/pages/Register'
 import App from '../components/App'
 import AppLayout from '../components/layouts/AppLayout'
-import Verify from '../components/pages/Verify'
 
 export const router = createBrowserRouter([
   {
@@ -20,16 +19,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'register',
-        children: [
-          {
-            index: true,
-            Component: Register,
-          },
-          {
-            path: 'verify',
-            Component: Verify,
-          },
-        ],
+        Component: Register,
       },
     ],
   },

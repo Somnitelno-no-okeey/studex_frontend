@@ -1,0 +1,17 @@
+.email-container {
+  margin-bottom: 0.75rem;
+}
+
+.email-container input {
+  margin: 0;
+}
+
+.email-container .input-error {
+  border: 1px solid var(--color-dangerous);
+}
+
+.email-container .error {
+  color: var(--color-dangerous);
+  margin-top: 0.5rem;
+  text-align: left;
+}

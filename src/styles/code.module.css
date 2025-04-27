@@ -1,0 +1,53 @@
+.code-wrapper {
+  margin-top: 1.25rem;
+  margin-bottom: 2rem;
+  padding: 0 0.7rem;
+}
+
+.code-wrapper.error input {
+  border: 1px solid var(--color-dangerous);
+  color: var(--color-dangerous);
+}
+
+.code-wrapper.error p {
+  color: var(--color-dangerous);
+  margin-top: 0.75rem;
+  margin-bottom: 0;
+}
+
+.code-container {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.code-container input {
+  height: 3.5rem;
+  border: 1px solid var(--color-light-main);
+  margin: 0;
+  padding: 0.9375rem 0.625rem;
+  transition: var(--transition);
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: var(--color-main);
+}
+
+.code-container input:nth-child(3) {
+  margin-right: 1.75rem;
+}
+
+.code-container input:focus {
+  border: 1px solid var(--color-main);
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type='number'],
+input[type='number']:hover,
+input[type='number']:focus {
+  appearance: none;
+  -moz-appearance: textfield;
+}

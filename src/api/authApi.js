@@ -4,10 +4,18 @@ import { baseApi } from './baseApi'
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     register: builder.mutation({
-      query: (data) => ({
+      query: ({ email, password }) => ({
         url: '/auth/register',
         method: 'POST',
-        body: data,
+        body: { email, password },
+      }),
+    }),
+
+    sendVerifyCode: builder.mutation({
+      query: (email) => ({
+        url: '/auth/send-verify-code',
+        method: 'POST',
+        body: { email },
       }),
     }),
 
@@ -77,6 +85,7 @@ export const authApi = baseApi.injectEndpoints({
 
 export const {
   useRegisterMutation,
+  useSendVerifyCodeMutation,
   useVerifyCodeMutation,
   useLoginMutation,
   useGetProfileQuery,

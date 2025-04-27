@@ -3,14 +3,14 @@ import eyeIcon from '../../../assets/icons/eye.svg'
 import eyeSlashIcon from '../../../assets/icons/eye-slash.svg'
 import styles from '../../../styles/input-password.module.css'
 
-export default function InputPassword({ textContent, setPassword, value }) {
+export default function InputPassword({ placeholder, setPassword, value }) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
   return (
     <div className={styles['password-container']}>
       <input
         type={isPasswordVisible ? 'text' : 'password'}
-        placeholder={textContent}
+        placeholder={placeholder}
         onChange={(evt) => setPassword(evt.target.value)}
         value={value}
         required

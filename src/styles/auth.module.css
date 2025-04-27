@@ -54,33 +54,6 @@ input:focus {
   text-decoration: underline;
 }
 
-.submit-button {
-  width: 100%;
-  height: 3rem;
-  border-radius: var(--radius-M);
-  background-color: var(--color-main);
-  color: var(--color-white);
-  font-weight: 600;
-  font-size: 1.125rem;
-  margin-bottom: 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.submit-button img {
-  animation: rotate 3s linear infinite;
-}
-
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .secondary-button {
   width: 100%;
   height: 3rem;
@@ -103,6 +76,17 @@ input:focus {
   border: 0.5px solid var(--color-dark-white);
 }
 
+.secondary-button:disabled {
+  color: var(--color-light-gray);
+  border: 0.5px solid var(--color-light-gray);
+  pointer-events: none;
+}
+
+p.hint {
+  color: var(--color-gray);
+  font-size: 0.75rem;
+}
+
 .inputs-error input {
   border: 1px solid var(--color-dangerous);
 }
@@ -112,9 +96,18 @@ input:focus {
 }
 
 .error p {
+  margin-bottom: 0;
+}
+
+.inputs-error p,
+p.error {
   color: var(--color-dangerous);
 }
 
-p.loading {
+p {
   margin-bottom: 0.75rem;
+}
+
+.passwords-container {
+  margin-bottom: 2rem;
 }
