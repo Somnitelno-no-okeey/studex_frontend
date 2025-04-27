@@ -8,15 +8,13 @@ import {
   useSendVerifyCodeMutation,
   useVerifyCodeMutation,
 } from '../../../api/authApi'
-import { useSelector } from 'react-redux'
 
-export default function Verify({ setStep }) {
+export default function Verify({ setStep, email }) {
   const [code, setCode] = useState(['', '', '', '', '', ''])
-  const [codeTimeout, setCodeTimeout] = useState(0)
+  const [codeTimeout, setCodeTimeout] = useState(120)
   const [requestCode] = useSendVerifyCodeMutation()
   const [sendCode, { isLoading }] = useVerifyCodeMutation()
   const [codeError, setCodeError] = useState()
-  const { user } = useSelector((state) => state.authSlice)
 
   useEffect(() => {
     if (codeTimeout > 0) {
@@ -30,7 +28,6 @@ export default function Verify({ setStep }) {
 
   const requestCodeToEmail = async () => {
     if (!codeTimeout) {
-      const email = user.email
       try {
         await requestCode(email).unwrap()
         setCodeError(null)

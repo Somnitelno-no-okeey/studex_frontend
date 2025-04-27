@@ -4,4 +4,11 @@ const RegistrationStep = {
   COMPLETED: 'completed',
 }
 
-export { RegistrationStep }
+const VerificationStep = {
+  EMAIL_FORM: 'form',
+  EMAIL_VERIFICATION: 'verification',
+  SET_PASSWORD: 'password',
+  COMPLETED: 'completed',
+}
+
+export { RegistrationStep, VerificationStep }

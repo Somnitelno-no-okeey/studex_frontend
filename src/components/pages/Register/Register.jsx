@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import RegisterForm from '../../ui/RegisterForm'
 import { RegistrationStep } from '../../../const'
 import Verify from '../../ui/Verify'
-import RegisterCompleted from '../../ui/RegisterCompleted'
+import CompletedMessage from '../../ui/CompletedMessage'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 
@@ -11,6 +11,7 @@ export default function Register() {
   const { user, accessToken, isAuthenticated } = useSelector(
     (state) => state.authSlice
   )
+  const [email, setEmail] = useState(user?.email || null)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -28,11 +29,17 @@ export default function Register() {
       return (
         <RegisterForm
           setStep={() => setStep(RegistrationStep.EMAIL_VERIFICATION)}
+          setUserEmail={setEmail}
         />
       )
     case RegistrationStep.EMAIL_VERIFICATION:
-      return <Verify setStep={() => setStep(RegistrationStep.COMPLETED)} />
+      return (
+        <Verify
+          setStep={() => setStep(RegistrationStep.COMPLETED)}
+          email={email}
+        />
+      )
     case RegistrationStep.COMPLETED:
-      return <RegisterCompleted />
+      return <CompletedMessage message="Поздравляем с успешной регистрацией" />
   }
 }

@@ -111,3 +111,11 @@ p {
 .passwords-container {
   margin-bottom: 2rem;
 }
+
+.passwords-container p {
+  margin-bottom: 0;
+}
+
+.email-input-form div:has(input[type='email']) {
+  margin: 1.25rem 0;
+}

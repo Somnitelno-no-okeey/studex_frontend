@@ -3,12 +3,12 @@ import AuthLayout from '../../layouts/AuthLayout'
 import SubmitButton from '../SubmitButton'
 import { useNavigate } from 'react-router'
 
-export default function RegisterCompleted() {
+export default function CompletedMessage({ message }) {
   const navigate = useNavigate()
 
   return (
     <AuthLayout>
-      <h1>Поздравляем с успешной регистрацией</h1>
+      <h1>{message}</h1>
       <SubmitButton
         textContent="Перейти ко входу"
         onClick={() => navigate('/login')}

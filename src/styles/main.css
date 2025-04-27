@@ -80,4 +80,5 @@ p.headline {
 p.caption {
   font-weight: 400;
   font-size: 0.75rem;
+  margin-bottom: 0;
 }

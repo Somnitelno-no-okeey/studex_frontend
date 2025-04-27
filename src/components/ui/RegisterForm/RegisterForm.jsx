@@ -3,7 +3,11 @@ import AuthLayout from '../../layouts/AuthLayout'
 import InputEmail from '../InputEmail'
 import InputPassword from '../InputPassword'
 import styles from '../../../styles/auth.module.css'
-import { useLoginMutation, useRegisterMutation } from '../../../api/authApi'
+import {
+  useLoginMutation,
+  useRegisterMutation,
+  useSendVerifyCodeMutation,
+} from '../../../api/authApi'
 import {
   validatePassword,
   validateEmail,
@@ -11,7 +15,7 @@ import {
 } from '../../../utils/validator.util.js'
 import SubmitButton from '../SubmitButton/SubmitButton.jsx'
 
-export default function RegisterForm({ setStep }) {
+export default function RegisterForm({ setStep, setUserEmail }) {
   const [register, { isLoading }] = useRegisterMutation()
   const [login] = useLoginMutation()
   const [email, setEmail] = useState()
@@ -20,6 +24,7 @@ export default function RegisterForm({ setStep }) {
   const [emailError, setEmailError] = useState(null)
   const [passwordsMatchError, setPasswordsMatchError] = useState(null)
   const [passwordError, setPasswordError] = useState(null)
+  const [requestCode] = useSendVerifyCodeMutation()
 
   const onSubmit = async (evt) => {
     evt.preventDefault()
@@ -34,7 +39,9 @@ export default function RegisterForm({ setStep }) {
     if (isValidEmail && isSamePasswords && isValidPassword) {
       try {
         await register({ email, password }).unwrap()
+        setUserEmail(email)
         await login({ email, password }).unwrap()
+        await requestCode(email).unwrap()
 
         setStep()
       } catch (err) {
