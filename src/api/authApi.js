@@ -4,32 +4,32 @@ import { baseApi } from './baseApi'
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     register: builder.mutation({
-      query: ({ email, password }) => ({
-        url: '/auth/register',
+      query: ({ email, password, confirmedPassword }) => ({
+        url: '/auth/',
         method: 'POST',
-        body: { email, password },
+        body: { email, password, confirm_password: confirmedPassword },
       }),
     }),
 
     sendVerifyCode: builder.mutation({
       query: (email) => ({
-        url: '/auth/send-verify-code',
+        url: '/auth/resend-code/',
         method: 'POST',
         body: { email },
       }),
     }),
 
     verifyCode: builder.mutation({
-      query: (code) => ({
-        url: '/auth/verify',
+      query: ({ email, code }) => ({
+        url: '/auth/verify/',
         method: 'POST',
-        body: { code },
+        body: { email, verification_code: code },
       }),
     }),
 
     login: builder.mutation({
       query: ({ email, password }) => ({
-        url: '/auth/login',
+        url: '/auth/token/',
         method: 'POST',
         body: { email, password },
       }),
@@ -37,7 +37,7 @@ export const authApi = baseApi.injectEndpoints({
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           const result = await queryFulfilled
-          dispatch(setAccessToken(result.data.accessToken))
+          dispatch(setAccessToken(result.data.access))
         } catch (err) {
           console.error(err)
         }
@@ -84,8 +84,11 @@ export const authApi = baseApi.injectEndpoints({
       },
     }),
 
-    refresh: builder.query({
-      query: () => '/auth/refresh',
+    refresh: builder.mutation({
+      query: () => ({
+        url: '/auth/token/refresh/',
+        method: 'POST',
+      }),
     }),
   }),
 })
@@ -98,5 +101,5 @@ export const {
   useGetProfileQuery,
   useResetPasswordMutation,
   useLogoutMutation,
-  useRefreshQuery,
+  useRefreshMutation,
 } = authApi

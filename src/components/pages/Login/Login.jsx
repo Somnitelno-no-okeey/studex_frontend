@@ -15,10 +15,17 @@ export default function Login() {
   const [login, { error, isLoading }] = useLoginMutation()
   const navigate = useNavigate()
   const { isAuthenticated } = useSelector((state) => state.authSlice)
+  const { email: registerEmail, isVerified } = useSelector(
+    (state) => state.verifySlice
+  )
 
   useEffect(() => {
     if (isAuthenticated) {
       navigate('/')
+    }
+
+    if (registerEmail && !isVerified) {
+      navigate('/register')
     }
   }, [])
 

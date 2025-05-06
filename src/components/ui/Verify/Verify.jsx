@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import AuthLayout from '../../layouts/AuthLayout'
 import InputCode from '../InputCode/InputCode'
 import { useState } from 'react'
@@ -8,23 +8,14 @@ import {
   useSendVerifyCodeMutation,
   useVerifyCodeMutation,
 } from '../../../api/authApi'
+import { useVerifyTimer } from '../../../hooks/useVerifyTimer'
 
-export default function Verify({ setStep, email }) {
+export default function Verify({ setStep, email, handleSubmit }) {
   const [code, setCode] = useState(['', '', '', '', '', ''])
-  const [codeTimeout, setCodeTimeout] = useState(120)
+  const { codeTimeout, startNewTimer, resetTimer } = useVerifyTimer(email)
   const [requestCode] = useSendVerifyCodeMutation()
   const [sendCode, { isLoading }] = useVerifyCodeMutation()
   const [codeError, setCodeError] = useState()
-
-  useEffect(() => {
-    if (codeTimeout > 0) {
-      const timeoutId = setTimeout(() => {
-        setCodeTimeout((prev) => prev - 1)
-      }, 1000)
-
-      return () => clearTimeout(timeoutId)
-    }
-  }, [codeTimeout])
 
   const requestCodeToEmail = async () => {
     if (!codeTimeout) {
@@ -32,7 +23,7 @@ export default function Verify({ setStep, email }) {
         await requestCode(email).unwrap()
         setCodeError(null)
         setCode(['', '', '', '', '', ''])
-        setCodeTimeout(120)
+        startNewTimer()
       } catch (err) {
         console.error(err)
       }
@@ -45,7 +36,9 @@ export default function Verify({ setStep, email }) {
 
     if (fullCode.length === 6) {
       try {
-        await sendCode(fullCode).unwrap()
+        await sendCode({ email, code: fullCode }).unwrap()
+        resetTimer()
+        handleSubmit()
         setStep()
       } catch (err) {
         console.error(err)

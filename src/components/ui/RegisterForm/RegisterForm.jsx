@@ -3,28 +3,24 @@ import AuthLayout from '../../layouts/AuthLayout'
 import InputEmail from '../InputEmail'
 import InputPassword from '../InputPassword'
 import styles from '../../../styles/auth.module.css'
-import {
-  useLoginMutation,
-  useRegisterMutation,
-  useSendVerifyCodeMutation,
-} from '../../../api/authApi'
+import { useRegisterMutation } from '../../../api/authApi'
 import {
   validatePassword,
   validateEmail,
   checkPasswordMatch,
 } from '../../../utils/validator.util.js'
 import SubmitButton from '../SubmitButton/SubmitButton.jsx'
+import { useVerifyTimer } from '../../../hooks/useVerifyTimer.js'
 
 export default function RegisterForm({ setStep, setUserEmail }) {
   const [register, { isLoading }] = useRegisterMutation()
-  const [login] = useLoginMutation()
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
   const [confirmedPassword, setConfirmedPassword] = useState()
   const [emailError, setEmailError] = useState(null)
   const [passwordsMatchError, setPasswordsMatchError] = useState(null)
   const [passwordError, setPasswordError] = useState(null)
-  const [requestCode] = useSendVerifyCodeMutation()
+  const { startNewTimer } = useVerifyTimer(email)
 
   const onSubmit = async (evt) => {
     evt.preventDefault()
@@ -38,10 +34,9 @@ export default function RegisterForm({ setStep, setUserEmail }) {
 
     if (isValidEmail && isSamePasswords && isValidPassword) {
       try {
-        await register({ email, password }).unwrap()
+        await register({ email, password, confirmedPassword }).unwrap()
         setUserEmail(email)
-        await login({ email, password }).unwrap()
-        await requestCode(email).unwrap()
+        startNewTimer()
 
         setStep()
       } catch (err) {

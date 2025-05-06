@@ -1,45 +1,65 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import RegisterForm from '../../ui/RegisterForm'
 import { RegistrationStep } from '../../../const'
 import Verify from '../../ui/Verify'
 import CompletedMessage from '../../ui/CompletedMessage'
-import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate, useSearchParams } from 'react-router'
+import { reset, setEmail, setVerified } from '../../../features/verifySlice'
 
 export default function Register() {
-  const [step, setStep] = useState(RegistrationStep.FORM_SUBMISSION)
-  const { user, accessToken, isAuthenticated } = useSelector(
-    (state) => state.authSlice
-  )
-  const [email, setEmail] = useState(user?.email || null)
+  const { isAuthenticated } = useSelector((state) => state.authSlice)
+  const { email, isVerified } = useSelector((state) => state.verifySlice)
   const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const step = searchParams.get('step') || RegistrationStep.FORM_SUBMISSION
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    if (accessToken && !isAuthenticated) {
-      if (user && !user.isVerify) {
-        setStep(RegistrationStep.EMAIL_VERIFICATION)
-      } else {
-        navigate('/')
-      }
+    if (isAuthenticated) {
+      navigate('/')
+    }
+
+    if (email && !isVerified) {
+      goToStep(RegistrationStep.EMAIL_VERIFICATION)
     }
   }, [])
 
+  useEffect(() => {
+    if (step === RegistrationStep.EMAIL_VERIFICATION && !email) {
+      goToStep(RegistrationStep.FORM_SUBMISSION)
+    }
+    if (step === RegistrationStep.COMPLETED && !isVerified) {
+      goToStep(RegistrationStep.EMAIL_VERIFICATION)
+    }
+  }, [step, email, isVerified])
+
+  const goToStep = (nextStep) => {
+    setSearchParams({ step: nextStep })
+  }
+
   switch (step) {
-    case RegistrationStep.FORM_SUBMISSION:
-      return (
-        <RegisterForm
-          setStep={() => setStep(RegistrationStep.EMAIL_VERIFICATION)}
-          setUserEmail={setEmail}
-        />
-      )
     case RegistrationStep.EMAIL_VERIFICATION:
       return (
         <Verify
-          setStep={() => setStep(RegistrationStep.COMPLETED)}
+          setStep={() => goToStep(RegistrationStep.COMPLETED)}
+          handleSubmit={() => dispatch(setVerified())}
           email={email}
         />
       )
     case RegistrationStep.COMPLETED:
-      return <CompletedMessage message="Поздравляем с успешной регистрацией" />
+      return (
+        <CompletedMessage
+          message="Поздравляем с успешной регистрацией"
+          handleClick={() => dispatch(reset())}
+        />
+      )
+    default:
+      return (
+        <RegisterForm
+          setStep={() => goToStep(RegistrationStep.EMAIL_VERIFICATION)}
+          setUserEmail={(email) => dispatch(setEmail(email))}
+        />
+      )
   }
 }

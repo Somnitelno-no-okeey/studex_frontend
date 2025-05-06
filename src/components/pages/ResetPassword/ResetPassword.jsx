@@ -1,47 +1,76 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { VerificationStep } from '../../../const'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import CompletedMessage from '../../ui/CompletedMessage'
 import Verify from '../../ui/Verify'
 import ResetPasswordForm from '../../ui/ResetPasswordForm'
 import SetNewPasswordForm from '../../ui/SetNewPasswordForm'
+import { useSearchParams } from 'react-router'
+import { reset, setEmail, setVerified } from '../../../features/verifySlice'
 
 export default function ResetPassword() {
-  const [step, setStep] = useState(VerificationStep.EMAIL_FORM)
   const { user, isAuthenticated } = useSelector((state) => state.authSlice)
-  const [email, setEmail] = useState(user?.email || '')
+  const { email, isVerified } = useSelector((state) => state.verifySlice)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const step = searchParams.get('step') || VerificationStep.EMAIL_FORM
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (isAuthenticated) {
-      setStep(VerificationStep.EMAIL_VERIFICATION)
+      goToStep(VerificationStep.EMAIL_VERIFICATION)
+    }
+
+    if (user?.email && !isVerified) {
+      dispatch(setEmail(user.email))
+      goToStep(VerificationStep.EMAIL_VERIFICATION)
     }
   }, [])
 
+  useEffect(() => {
+    if (step === VerificationStep.EMAIL_VERIFICATION && !email) {
+      goToStep(VerificationStep.EMAIL_FORM)
+    }
+    if (step === VerificationStep.COMPLETED && !isVerified) {
+      goToStep(VerificationStep.EMAIL_VERIFICATION)
+    }
+  }, [step, email, isVerified])
+
+  const goToStep = (nextStep) => {
+    setSearchParams({ step: nextStep })
+  }
+
   switch (step) {
-    case VerificationStep.EMAIL_FORM:
-      return (
-        <ResetPasswordForm
-          setStep={() => setStep(VerificationStep.EMAIL_VERIFICATION)}
-          setEmail={setEmail}
-          email={email}
-        />
-      )
     case VerificationStep.EMAIL_VERIFICATION:
       return (
         <Verify
-          setStep={() => setStep(VerificationStep.SET_PASSWORD)}
+          setStep={() => goToStep(VerificationStep.SET_PASSWORD)}
+          handleSubmit={() => dispatch(setVerified())}
           email={email}
         />
       )
     case VerificationStep.SET_PASSWORD:
       return (
         <SetNewPasswordForm
-          setStep={() => setStep(VerificationStep.COMPLETED)}
+          setStep={() => goToStep(VerificationStep.COMPLETED)}
           email={email}
         />
       )
 
     case VerificationStep.COMPLETED:
-      return <CompletedMessage message="Пароль успешно изменен" />
+      return (
+        <CompletedMessage
+          message="Пароль успешно изменен"
+          handleClick={() => dispatch(reset())}
+        />
+      )
+
+    default:
+      return (
+        <ResetPasswordForm
+          setStep={() => goToStep(VerificationStep.EMAIL_VERIFICATION)}
+          setEmail={(email) => dispatch(setEmail(email))}
+          email={email}
+        />
+      )
   }
 }
