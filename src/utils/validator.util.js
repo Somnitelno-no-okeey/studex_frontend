@@ -12,4 +12,22 @@ const checkPasswordMatch = (password, confirmedPassword) => {
   return password === confirmedPassword
 }
 
-export { validatePassword, validateEmail, checkPasswordMatch }
+const validateNotEmpty = (value) => {
+  return value.trim().length !== 0
+}
+
+const validateRussianLetters = (value) => {
+  if (!value) {
+    return true
+  }
+  const russianLettersRegex = /^[А-ЯЁа-яё]+$/
+  return russianLettersRegex.test(value)
+}
+
+export {
+  validatePassword,
+  validateEmail,
+  checkPasswordMatch,
+  validateNotEmpty,
+  validateRussianLetters,
+}

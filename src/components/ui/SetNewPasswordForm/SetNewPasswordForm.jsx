@@ -7,7 +7,7 @@ import {
   checkPasswordMatch,
   validatePassword,
 } from '../../../utils/validator.util'
-import { useResetPasswordMutation } from '../../../api/authApi'
+import { useResetPasswordMutation } from '../../../api/changeDataApi'
 
 export default function SetNewPasswordForm({ setStep, email }) {
   const [password, setPassword] = useState()

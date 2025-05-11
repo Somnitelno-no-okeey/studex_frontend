@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import styles from '../../../styles/code.module.css'
+import styles from './code.module.css'
 
 export default function InputCode({ code, setCode, error }) {
   const inputsRef = useRef([])

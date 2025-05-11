@@ -1,0 +1,55 @@
+.profile-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 2px solid var(--color-dark-white);
+  padding-bottom: 12px;
+  text-align: left;
+}
+
+.examle-mail {
+  color: var(--color-gray);
+  margin-top: 2px;
+  margin-bottom: 0;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--color-main);
+  margin-bottom: 2px;
+}
+
+.user-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 100px;
+  background-color: var(--color-dark-white);
+  padding: 6px;
+  margin-top: 8px;
+  margin-bottom: auto;
+}
+
+.profile-actions {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.logout-button {
+  background: var(--color-dark-white);
+  color: var(--color-main);
+  width: 100%;
+  height: 3rem;
+  font-weight: 600;
+  border-radius: var(--radius-M);
+  font-size: 18px;
+  transition: var(--transition);
+}
+
+.logout-button:hover {
+  background: var(--color-main);
+  color: var(--color-white);
+}

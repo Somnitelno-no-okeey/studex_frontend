@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from '../../../styles/input-email.module.css'
+import styles from './input-email.module.css'
 
 export default function InputEmail({
   placeholder,

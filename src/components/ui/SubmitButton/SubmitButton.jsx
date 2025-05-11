@@ -1,6 +1,6 @@
 import React from 'react'
 import loading from '../../../assets/icons/loading.svg'
-import styles from '../../../styles/submit-button.module.css'
+import styles from './submit-button.module.css'
 
 export default function SubmitButton({
   isLoading = null,

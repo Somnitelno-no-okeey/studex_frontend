@@ -66,6 +66,7 @@ input:focus {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 0.75rem;
   margin-bottom: 0.75rem;
   transition: var(--transition);
 }

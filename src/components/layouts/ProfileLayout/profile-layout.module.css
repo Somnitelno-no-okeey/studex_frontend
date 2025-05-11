@@ -1,0 +1,13 @@
+.profile-card {
+  min-height: 380px;
+  background: var(--color-white);
+  color: var(--color-main);
+  width: 410px;
+  border-radius: var(--radius-XXL);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px 24px;
+  margin: auto;
+}

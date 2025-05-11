@@ -11,4 +11,10 @@ const VerificationStep = {
   COMPLETED: 'completed',
 }
 
-export { RegistrationStep, VerificationStep }
+const ProfileView = {
+  PROFILE_INFO: 'profile-info',
+  CHANGE_PASSWORD: 'change-password',
+  CHANGE_INFO: 'change-info',
+}
+
+export { RegistrationStep, VerificationStep, ProfileView }

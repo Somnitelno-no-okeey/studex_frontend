@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import eyeIcon from '../../../assets/icons/eye.svg'
 import eyeSlashIcon from '../../../assets/icons/eye-slash.svg'
-import styles from '../../../styles/input-password.module.css'
+import styles from './input-password.module.css'
 
 export default function InputPassword({ placeholder, setPassword, value }) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
