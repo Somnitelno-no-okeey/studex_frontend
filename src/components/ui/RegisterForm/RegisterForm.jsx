@@ -34,7 +34,7 @@ export default function RegisterForm({ setStep, setUserEmail }) {
 
     if (isValidEmail && isSamePasswords && isValidPassword) {
       try {
-        await register({ email, password, confirmedPassword }).unwrap()
+        await register({ email, password }).unwrap()
         setUserEmail(email)
         startNewTimer()
 

@@ -1,0 +1,21 @@
+header {
+  padding: 8px 41px;
+  border-bottom: 1px solid var(--color-dark-white);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  color: var(--color-main);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.user-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 100px;
+  background-color: var(--color-dark-white);
+  padding: 6px;
+}

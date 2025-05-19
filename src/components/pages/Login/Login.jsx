@@ -8,6 +8,7 @@ import InputEmail from '../../ui/InputEmail'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import SubmitButton from '../../ui/SubmitButton'
+import { VerifyMode } from '../../../const'
 
 export default function Login() {
   const [email, setEmail] = useState()
@@ -15,16 +16,18 @@ export default function Login() {
   const [login, { error, isLoading }] = useLoginMutation()
   const navigate = useNavigate()
   const { isAuthenticated } = useSelector((state) => state.authSlice)
-  const { email: registerEmail, isVerified } = useSelector(
-    (state) => state.verifySlice
-  )
+  const {
+    email: registerEmail,
+    isVerified,
+    mode,
+  } = useSelector((state) => state.verifySlice)
 
   useEffect(() => {
     if (isAuthenticated) {
       navigate('/')
     }
 
-    if (registerEmail && !isVerified) {
+    if (mode === VerifyMode.REGISTER && registerEmail && !isVerified) {
       navigate('/register')
     }
   }, [])

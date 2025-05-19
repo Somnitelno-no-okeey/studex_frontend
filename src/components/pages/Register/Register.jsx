@@ -1,15 +1,20 @@
 import React, { useEffect } from 'react'
 import RegisterForm from '../../ui/RegisterForm'
-import { RegistrationStep } from '../../../const'
+import { RegistrationStep, VerifyMode } from '../../../const'
 import Verify from '../../ui/Verify'
 import CompletedMessage from '../../ui/CompletedMessage'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useSearchParams } from 'react-router'
-import { reset, setEmail, setVerified } from '../../../features/verifySlice'
+import {
+  reset,
+  setEmail,
+  setMode,
+  setVerified,
+} from '../../../features/verifySlice'
 
 export default function Register() {
   const { isAuthenticated } = useSelector((state) => state.authSlice)
-  const { email, isVerified } = useSelector((state) => state.verifySlice)
+  const { email, isVerified, mode } = useSelector((state) => state.verifySlice)
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
   const step = searchParams.get('step') || RegistrationStep.FORM_SUBMISSION
@@ -18,6 +23,11 @@ export default function Register() {
   useEffect(() => {
     if (isAuthenticated) {
       navigate('/')
+    }
+
+    if (mode !== VerifyMode.REGISTER) {
+      dispatch(reset())
+      dispatch(setMode(VerifyMode.REGISTER))
     }
 
     if (email && !isVerified) {

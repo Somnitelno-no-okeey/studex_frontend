@@ -1,0 +1,34 @@
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background: var(--color-dark-white);
+  padding: 16px 48px 24px;
+}
+footer a {
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--color-gray);
+  margin-top: 8px;
+}
+
+.footer-title {
+  color: var(--color-light-main);
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.footer-text {
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--color-gray);
+  margin-top: 8px;
+}
+
+footer .copyright a {
+  margin: 0;
+  color: var(--color-light-main);
+  font-weight: 600;
+  font-size: 18px;
+}

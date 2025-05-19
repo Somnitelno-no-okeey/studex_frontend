@@ -1,5 +1,6 @@
 import { fetchBaseQuery, createApi } from '@reduxjs/toolkit/query/react'
 import { logout, setAccessToken } from '../features/authSlice'
+import { authApi } from './authApi'
 
 const baseUrl = import.meta.env.VITE_API_URL
 
@@ -16,8 +17,15 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions)
 
-  if (result?.error?.status === 401) {
-    const refreshResult = await api.dispatch(api.endpoints.refresh.initiate())
+  const isRefreshingRequest =
+    typeof args === 'string'
+      ? args.includes('/auth/refresh')
+      : typeof args?.url === 'string' && args.url.includes('/auth/refresh')
+
+  if (result?.error?.status === 401 && !isRefreshingRequest) {
+    const refreshResult = await api.dispatch(
+      authApi.endpoints.refresh.initiate()
+    )
 
     if (refreshResult?.data?.accessToken) {
       api.dispatch(setAccessToken(refreshResult.data.accessToken))

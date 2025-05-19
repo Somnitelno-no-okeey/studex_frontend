@@ -1,20 +1,45 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import AuthLayout from '../../layouts/AuthLayout'
 import InputCode from '../InputCode/InputCode'
 import { useState } from 'react'
 import styles from '../../../styles/auth.module.css'
 import SubmitButton from '../SubmitButton'
 import {
+  useResetPasswordVerifyCodeMutation,
+  useSendResetPasswordVerifyCodeMutation,
   useSendVerifyCodeMutation,
   useVerifyCodeMutation,
 } from '../../../api/authApi'
 import { useVerifyTimer } from '../../../hooks/useVerifyTimer'
+import verifyStyles from './verify.module.css'
+import { VerifyMode } from '../../../const'
 
-export default function Verify({ setStep, email, handleSubmit }) {
+export default function Verify({
+  setStep,
+  email,
+  handleSubmit,
+  mode = VerifyMode.REGISTER,
+}) {
   const [code, setCode] = useState(['', '', '', '', '', ''])
   const { codeTimeout, startNewTimer, resetTimer } = useVerifyTimer(email)
-  const [requestCode] = useSendVerifyCodeMutation()
-  const [sendCode, { isLoading }] = useVerifyCodeMutation()
+
+  const [requestRegisterCode] = useSendVerifyCodeMutation()
+  const [sendRegisterCode, { isLoading: registerCodeLoading }] =
+    useVerifyCodeMutation()
+
+  const [requestResetPsswordCode] = useSendResetPasswordVerifyCodeMutation()
+  const [sendResetPasswordCode, { isLoading: resetPasswordCodeLoading }] =
+    useResetPasswordVerifyCodeMutation()
+
+  const requestCode =
+    mode === VerifyMode.REGISTER ? requestRegisterCode : requestResetPsswordCode
+  const sendCode =
+    mode === VerifyMode.REGISTER ? sendRegisterCode : sendResetPasswordCode
+  const isLoading =
+    mode === VerifyMode.REGISTER
+      ? registerCodeLoading
+      : resetPasswordCodeLoading
+
   const [codeError, setCodeError] = useState()
 
   const requestCodeToEmail = async () => {
@@ -29,6 +54,12 @@ export default function Verify({ setStep, email, handleSubmit }) {
       }
     }
   }
+
+  useEffect(() => {
+    if (mode === VerifyMode.RESET_PASSWORD) {
+      requestCodeToEmail()
+    }
+  }, [])
 
   const onSubmit = async (evt) => {
     evt.preventDefault()
@@ -49,9 +80,13 @@ export default function Verify({ setStep, email, handleSubmit }) {
 
   return (
     <AuthLayout>
-      <h1>Подтвердите регистрацию</h1>
+      <h1>
+        {mode === VerifyMode.REGISTER
+          ? 'Подтвердите регистрацию'
+          : 'Подтвердите вашу почту'}
+      </h1>
       <p>Введите код подтверждения из письма</p>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} className={verifyStyles['verify-form']}>
         <InputCode setCode={setCode} code={code} error={codeError} />
         {codeTimeout > 0 && (
           <p className={styles.hint}>

@@ -4,16 +4,16 @@ import { baseApi } from './baseApi'
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     register: builder.mutation({
-      query: ({ email, password, confirmedPassword }) => ({
-        url: '/auth/',
+      query: ({ email, password }) => ({
+        url: '/auth/registration/',
         method: 'POST',
-        body: { email, password, confirm_password: confirmedPassword },
+        body: { email, password },
       }),
     }),
 
     sendVerifyCode: builder.mutation({
       query: (email) => ({
-        url: '/auth/resend-code/',
+        url: '/auth/verify/resend-code/',
         method: 'POST',
         body: { email },
       }),
@@ -27,9 +27,25 @@ export const authApi = baseApi.injectEndpoints({
       }),
     }),
 
+    sendResetPasswordVerifyCode: builder.mutation({
+      query: (email) => ({
+        url: '/auth/password-reset/request/',
+        method: 'POST',
+        body: { email },
+      }),
+    }),
+
+    resetPasswordVerifyCode: builder.mutation({
+      query: ({ email, code }) => ({
+        url: '/auth/password-reset/verify/',
+        method: 'POST',
+        body: { email, password_reset_code: code },
+      }),
+    }),
+
     login: builder.mutation({
       query: ({ email, password }) => ({
-        url: '/auth/token/',
+        url: '/auth/login/',
         method: 'POST',
         body: { email, password },
       }),
@@ -79,7 +95,7 @@ export const authApi = baseApi.injectEndpoints({
 
     refresh: builder.mutation({
       query: () => ({
-        url: '/auth/token/refresh/',
+        url: '/auth/refresh/',
         method: 'POST',
       }),
     }),
@@ -90,6 +106,8 @@ export const {
   useRegisterMutation,
   useSendVerifyCodeMutation,
   useVerifyCodeMutation,
+  useSendResetPasswordVerifyCodeMutation,
+  useResetPasswordVerifyCodeMutation,
   useLoginMutation,
   useGetProfileQuery,
   useLogoutMutation,

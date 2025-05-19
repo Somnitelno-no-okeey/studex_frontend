@@ -1,23 +1,34 @@
 import React, { useEffect } from 'react'
-import { VerificationStep } from '../../../const'
+import { VerificationStep, VerifyMode } from '../../../const'
 import { useDispatch, useSelector } from 'react-redux'
 import CompletedMessage from '../../ui/CompletedMessage'
 import Verify from '../../ui/Verify'
 import ResetPasswordForm from '../../ui/ResetPasswordForm'
 import SetNewPasswordForm from '../../ui/SetNewPasswordForm'
-import { useSearchParams } from 'react-router'
-import { reset, setEmail, setVerified } from '../../../features/verifySlice'
+import { useNavigate, useSearchParams } from 'react-router'
+import {
+  reset,
+  setEmail,
+  setMode,
+  setVerified,
+} from '../../../features/verifySlice'
 
 export default function ResetPassword() {
   const { user, isAuthenticated } = useSelector((state) => state.authSlice)
-  const { email, isVerified } = useSelector((state) => state.verifySlice)
+  const { email, isVerified, mode } = useSelector((state) => state.verifySlice)
   const [searchParams, setSearchParams] = useSearchParams()
   const step = searchParams.get('step') || VerificationStep.EMAIL_FORM
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (isAuthenticated) {
-      goToStep(VerificationStep.EMAIL_VERIFICATION)
+      navigate('/')
+    }
+
+    if (mode !== VerifyMode.RESET_PASSWORD) {
+      dispatch(reset())
+      dispatch(setMode(VerifyMode.RESET_PASSWORD))
     }
 
     if (user?.email && !isVerified) {
@@ -46,6 +57,7 @@ export default function ResetPassword() {
           setStep={() => goToStep(VerificationStep.SET_PASSWORD)}
           handleSubmit={() => dispatch(setVerified())}
           email={email}
+          mode={VerifyMode.RESET_PASSWORD}
         />
       )
     case VerificationStep.SET_PASSWORD:

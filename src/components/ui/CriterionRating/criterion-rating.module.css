@@ -1,0 +1,33 @@
+.quality-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 32px;
+  margin-top: 8px;
+}
+
+.quality-item .criterion {
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0;
+}
+
+.quality-item-rating {
+  display: flex;
+  align-items: end;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.stars {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rating-value-mini {
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--color-main);
+  margin-bottom: 0;
+}

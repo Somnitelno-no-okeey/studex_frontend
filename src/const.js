@@ -17,4 +17,9 @@ const ProfileView = {
   CHANGE_INFO: 'change-info',
 }
 
-export { RegistrationStep, VerificationStep, ProfileView }
+const VerifyMode = {
+  RESET_PASSWORD: 'reset-password',
+  REGISTER: 'register',
+}
+
+export { RegistrationStep, VerificationStep, ProfileView, VerifyMode }

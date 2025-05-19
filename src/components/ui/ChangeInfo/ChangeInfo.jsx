@@ -8,6 +8,7 @@ import {
 } from '../../../utils/validator.util'
 import { useChangeUserInfoMutation } from '../../../api/changeDataApi'
 import { ProfileView } from '../../../const'
+import styles from './change-info.module.css'
 
 export default function ChangeInfo({ handleNavigate }) {
   const [changeUserInfo, { isLoading }] = useChangeUserInfoMutation()
@@ -96,30 +97,32 @@ export default function ChangeInfo({ handleNavigate }) {
     <ProfileLayout>
       <h3>Изменить информацию о себе</h3>
       <form onSubmit={onSubmit}>
-        <InputText
-          placeholder="Фамилия"
-          error={errors.surnameError}
-          value={userInfo.surname}
-          setValue={(value) =>
-            setUserInfo((prev) => ({ ...prev, surname: value }))
-          }
-        />
-        <InputText
-          placeholder="Имя"
-          error={errors.nameError}
-          value={userInfo.name}
-          setValue={(value) =>
-            setUserInfo((prev) => ({ ...prev, name: value }))
-          }
-        />
-        <InputText
-          placeholder="Отчество"
-          error={errors.patronymicError}
-          value={userInfo.patronymic}
-          setValue={(value) =>
-            setUserInfo((prev) => ({ ...prev, patronymic: value }))
-          }
-        />
+        <div className={styles['inputs-container']}>
+          <InputText
+            placeholder="Фамилия"
+            error={errors.surnameError}
+            value={userInfo.surname}
+            setValue={(value) =>
+              setUserInfo((prev) => ({ ...prev, surname: value }))
+            }
+          />
+          <InputText
+            placeholder="Имя"
+            error={errors.nameError}
+            value={userInfo.name}
+            setValue={(value) =>
+              setUserInfo((prev) => ({ ...prev, name: value }))
+            }
+          />
+          <InputText
+            placeholder="Отчество"
+            error={errors.patronymicError}
+            value={userInfo.patronymic}
+            setValue={(value) =>
+              setUserInfo((prev) => ({ ...prev, patronymic: value }))
+            }
+          />
+        </div>
         <SubmitButton textContent="Сохранить" isLoading={isLoading} />
       </form>
     </ProfileLayout>
