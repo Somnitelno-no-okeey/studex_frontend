@@ -6,6 +6,7 @@ export default function SubmitButton({
   isLoading = null,
   onClick = null,
   textContent,
+  customClass = null,
 }) {
   return (
     <div className="button-container">
@@ -14,7 +15,7 @@ export default function SubmitButton({
       )}
 
       <button
-        className={styles['submit-button']}
+        className={`${styles['submit-button']} ${customClass ? customClass : ''}`}
         disabled={isLoading}
         onClick={onClick}
       >

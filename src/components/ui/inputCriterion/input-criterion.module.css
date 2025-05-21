@@ -1,0 +1,44 @@
+.criterion-input-container {
+  margin-bottom: 16px;
+}
+
+.criterion-name-container {
+  display: flex;
+}
+
+.criterion-name-container p,
+.criterion-name-container span {
+  margin-bottom: 0;
+  margin-left: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--color-gray);
+}
+
+.criterion-name-container .error-criterion {
+  color: var(--color-dangerous);
+}
+
+.criterion-name-container span {
+  margin: 0;
+  color: var(--color-dangerous);
+}
+
+.inputs-container {
+  display: flex;
+}
+
+.inputs-container .label-rating {
+  cursor: pointer;
+}
+
+.inputs-container .label-rating input {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  border: 0;
+}

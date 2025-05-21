@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import bookIcon from '../../../assets/icons/book.svg'
 import styles from './discipline.module.css'
 import {
   useGetCriteriaByDisciplineQuery,
   useGetDisciplineInfoQuery,
+  useGetReviewsByDisciplineQuery,
 } from '../../../api/disciplineApi'
 import { useParams } from 'react-router'
 import CriterionRating from '../../ui/CriterionRating/CriterionRating'
@@ -11,11 +12,19 @@ import crownIcon from '../../../assets/icons/crown.svg'
 import noteIcon from '../../../assets/icons/note-2.svg'
 import teacherIcon from '../../../assets/icons/Icon.svg'
 import arrowIcon from '../../../assets/icons/icon2.svg'
+import ReviewsTitle from '../../ui/ReviewsTitle'
+import ReviewForm from '../../ui/ReviewForm'
 
 export default function Discipline() {
   const { id } = useParams()
-  const { disciplineData } = useGetDisciplineInfoQuery(id)
-  const { criteriaData } = useGetCriteriaByDisciplineQuery(id)
+  const { data: disciplineData, error: disciplineError } =
+    useGetDisciplineInfoQuery(id)
+  const { data: criteriaData } = useGetCriteriaByDisciplineQuery(id)
+  const { data: reviewsData } = useGetReviewsByDisciplineQuery({
+    disciplineId: id,
+  })
+
+  const [isReviewFormOpen, setIsReviewFormOpen] = useState(false)
 
   return (
     <>
@@ -83,24 +92,48 @@ export default function Discipline() {
       </div>
 
       <details className={`${styles['card-teachers']} ${styles.card}`}>
-        <summary className={styles['icon-text-teachers']}>
+        <summary
+          className={`${styles['icon-text-teachers']} ${styles['icon-text']}`}
+        >
           <img src={teacherIcon} alt="Иконка шляпы" className={styles.icon} />
           <h3 className={styles['card-subtitle']}>Преподаватели</h3>
           <span className={styles['toggle-button']}>
-            <img src={arrowIcon} alt="Открывающая стрелка вниз" />
+            {disciplineError ? (
+              'Информация о преподавателях временно недоступна'
+            ) : (
+              <img src={arrowIcon} alt="Открывающая стрелка вниз" />
+            )}
           </span>
         </summary>
-        <ul className={styles['teachers']}>
-          <li>Фамилия Имя Отчество</li>
-          <li>Фамилия Имя Отчество</li>
-          <li>Фамилия Имя Отчество</li>
-          <li>Фамилия Имя Отчество</li>
+        {!disciplineError && (
+          <ul className={styles['teachers']}>
+            <li>Фамилия Имя Отчество</li>
+            <li>Фамилия Имя Отчество</li>
+            <li>Фамилия Имя Отчество</li>
+            <li>Фамилия Имя Отчество</li>
 
-          {/* {disciplineData?.teachers.map((teacher, index) => (
+            {/* {disciplineData?.teachers.map((teacher, index) => (
             <li key={index}>{teacher}</li>
           ))} */}
-        </ul>
+          </ul>
+        )}
       </details>
+
+      <div className="reviews">
+        <ReviewsTitle
+          commentsCount={reviewsData?.['total_comments']}
+          handleOpenReviewForm={() => setIsReviewFormOpen(true)}
+        />
+      </div>
+
+      {isReviewFormOpen && (
+        <ReviewForm
+          disciplineName="Название дисциплины"
+          disciplineId={id}
+          criteria={criteriaData}
+          handleCloseReviewForm={() => setIsReviewFormOpen(false)}
+        />
+      )}
     </>
   )
 }

@@ -3,7 +3,7 @@ import styles from './criterion-rating.module.css'
 import Star from '../Star'
 import criterionIcon from '../../../assets/icons/Question.svg'
 
-export default function CriterionRating({
+export default React.memo(function CriterionRating({
   rating,
   showNumberRating = false,
   criterionName,
@@ -18,11 +18,12 @@ export default function CriterionRating({
         )}
         <div className={styles['stars']}>
           {Array.from({ length: 5 }).map((_, index) => {
-            const percent = (rating - (index + 1)) * 100
+            const percent = (rating - index) * 100
+
             return <Star key={index} percent={percent} />
           })}
         </div>
       </div>
     </div>
   )
-}
+})

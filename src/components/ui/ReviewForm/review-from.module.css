@@ -1,0 +1,107 @@
+.form-container {
+  padding: 40px 24px 60px 24px;
+  width: 410px;
+  border-radius: var(--radius-XL);
+  background-color: var(--color-white);
+  text-align: center;
+}
+
+.hint {
+  margin-bottom: 16px;
+  color: var(--color-light-gray);
+}
+
+.criteria-inputs {
+  margin-bottom: 32px;
+}
+
+.text-container {
+  margin-bottom: 32px;
+}
+
+.text-container p {
+  color: var(--color-gray);
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+.text-container textarea {
+  resize: none;
+  width: 100%;
+  padding: 12px 24px;
+  border-radius: var(--radius-M);
+  background-color: var(--color-dark-white);
+  color: var(--color-gray);
+  outline: none;
+  height: 48px;
+  transition: var(--transition);
+}
+
+.text-container textarea.big-textarea {
+  height: 144px;
+}
+
+.anonymous-container {
+  display: flex;
+  height: 24px;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.anonymous-container p {
+  color: var(--color-gray);
+}
+
+.anonymous-label {
+  width: 21.5px;
+  height: 21.5px;
+  border: 1px solid var(--color-gray);
+  border-radius: 8px;
+  transition: var(--transition);
+  background: center;
+}
+
+.anonymous-label:has(input:checked) {
+  background: var(--color-main) url('../../../assets/icons/checkmark.svg')
+    no-repeat center;
+  border: 1px solid var(--color-main);
+}
+
+.anonymous-label input {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  border: 0;
+}
+
+.secondary-button {
+  width: 100%;
+  height: 3rem;
+  border-radius: var(--radius-M);
+  background-color: var(--color-white);
+  color: var(--color-gray);
+  border: 0.5px solid var(--color-gray);
+  font-weight: 600;
+  font-size: 1.125rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  transition: var(--transition);
+}
+
+.secondary-button:hover {
+  color: var(--color-light-black);
+  background-color: var(--color-dark-white);
+  border: 0.5px solid var(--color-dark-white);
+}
+
+.error-message {
+  color: var(--color-dangerous);
+  margin-bottom: 0;
+}

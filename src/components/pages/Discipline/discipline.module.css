@@ -68,10 +68,7 @@
 }
 
 .icon-text-teachers {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 0;
 }
 
 .description {
@@ -112,6 +109,4 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
 }

@@ -1,0 +1,54 @@
+.reviews-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.reviews-count,
+.reviews-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.reviews-buttons {
+  gap: 8px;
+}
+
+.reviews-count {
+  margin-left: 32px;
+}
+
+.reviews-count img {
+  width: 24px;
+  height: 24px;
+}
+
+.reviews-count h3 {
+  margin-bottom: 0;
+  margin-left: 8px;
+  margin-right: 16px;
+  color: var(--color-light-black);
+}
+
+.reviews-count span {
+  color: var(--color-light-gray);
+  font-weight: 600;
+  font-size: 22px;
+}
+
+.button {
+  padding: 0 24px;
+}
+
+.secondary-button {
+  height: 3rem;
+  border-radius: var(--radius-M);
+  background-color: var(--color-dark-white);
+  color: var(--color-main);
+  padding: 0 24px;
+  font-weight: 600;
+  font-size: 1.125rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
