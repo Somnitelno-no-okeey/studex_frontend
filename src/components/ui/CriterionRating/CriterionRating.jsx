@@ -7,7 +7,20 @@ export default React.memo(function CriterionRating({
   rating,
   showNumberRating = false,
   criterionName,
+  showOnlyStars = false,
 }) {
+  if (showOnlyStars) {
+    return (
+      <div className={styles['stars']}>
+        {Array.from({ length: 5 }).map((_, index) => {
+          const percent = (rating - index) * 100
+
+          return <Star key={index} percent={percent} />
+        })}
+      </div>
+    )
+  }
+
   return (
     <div className={styles['quality-item']}>
       <img src={criterionIcon} className={styles['icon']} />

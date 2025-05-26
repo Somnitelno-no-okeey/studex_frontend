@@ -1,0 +1,82 @@
+.discipline-card {
+  background-color: var(--color-dark-white);
+  border-radius: var(--radius-L);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.discipline-card p {
+  margin-bottom: 0;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--color-gray);
+}
+
+.icon {
+  margin-right: 8px;
+}
+
+.discipline-info {
+  display: flex;
+  align-items: center;
+}
+
+p.discipline-title {
+  font-weight: 600;
+  font-size: 24px;
+  color: var(--color-light-black);
+}
+
+.discipline-module {
+  color: #666;
+  font-size: 14px;
+}
+
+.discipline-meta {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--color-gray);
+}
+
+.main-discipline-rating {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-left: auto;
+  color: var(--color-light-gray);
+}
+
+p.rating-value-medium {
+  font-weight: 600;
+  font-size: 24px;
+  color: var(--color-main);
+}
+
+.review-count {
+  display: flex;
+  gap: 8px;
+  margin-left: 20px;
+}
+
+.review-count p {
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--color-light-gray);
+}
+
+.discipline-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-left: 32px;
+}
+
+.additional-option {
+  display: flex;
+  gap: 40px;
+}

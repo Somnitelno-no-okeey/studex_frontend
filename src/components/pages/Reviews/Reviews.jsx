@@ -52,13 +52,15 @@ export default function Reviews() {
         </div>
       </section>
 
-      <section className="reviews">
+      <section className={styles['reviews']}>
         <ReviewsTitle
           commentsCount={mockReviewsData?.['total_comments']}
           handleOpenReviewForm={() => setIsReviewFormOpen(true)}
           isSecondaryButtonVisible={false}
         />
-        <Sorting sortingData={reviewSorting} />
+        <div className={styles['sorting-wrapper']}>
+          <Sorting sortingData={reviewSorting} />
+        </div>
 
         <div className={styles['review-cards']}>
           {mockReviewsData?.comments.map((reviewData, index) => (

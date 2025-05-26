@@ -49,3 +49,7 @@ html:has(.blur-overlay) {
   z-index: 1001;
   pointer-events: none;
 }
+
+.reviews .sorting-wrapper {
+  margin-left: 32px;
+}

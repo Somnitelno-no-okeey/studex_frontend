@@ -6,6 +6,7 @@ import AppLayout from '../components/layouts/AppLayout'
 import ResetPassword from '../components/pages/ResetPassword'
 import Discipline from '../components/pages/Discipline'
 import Reviews from '../components/pages/Reviews'
+import Main from '../components/pages/Main'
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ export const router = createBrowserRouter([
         path: '/',
         Component: AppLayout,
         children: [
+          {
+            path: '/',
+            Component: Main,
+          },
           {
             path: '/discipline/:id',
             Component: Discipline,

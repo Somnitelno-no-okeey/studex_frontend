@@ -28,10 +28,16 @@ const reviewSorting = [
   { name: 'Полезности', value: 'useful' },
 ]
 
+const disciplineSorting = [
+  { name: 'Общей оценке', value: 'rating' },
+  { name: 'По количестсву отзывов', value: 'reviews' },
+]
+
 export {
   RegistrationStep,
   VerificationStep,
   ProfileView,
   VerifyMode,
   reviewSorting,
+  disciplineSorting,
 }
