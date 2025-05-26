@@ -5,7 +5,7 @@ import App from '../components/App'
 import AppLayout from '../components/layouts/AppLayout'
 import ResetPassword from '../components/pages/ResetPassword'
 import Discipline from '../components/pages/Discipline'
-import ProfileMenu from '../components/ui/ProfileMenu'
+import Reviews from '../components/pages/Reviews'
 
 export const router = createBrowserRouter([
   {
@@ -21,8 +21,8 @@ export const router = createBrowserRouter([
             Component: Discipline,
           },
           {
-            path: '/profile',
-            Component: ProfileMenu,
+            path: '/discipline/:id/reviews',
+            Component: Reviews,
           },
         ],
       },

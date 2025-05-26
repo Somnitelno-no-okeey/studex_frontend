@@ -5,11 +5,6 @@ import styles from './review-from.module.css'
 import SubmitButton from '../SubmitButton'
 import { useSendReviewMutation } from '../../../api/disciplineApi'
 
-const mockCriteria = [
-  { criterion: 'Интересность дисциплины', average_rating: 4.5 },
-  { criterion: 'Полезность', average_rating: 4.0 },
-]
-
 export default function ReviewForm({
   disciplineName,
   criteria,
@@ -17,10 +12,10 @@ export default function ReviewForm({
   handleCloseReviewForm,
 }) {
   const [userCriteria, setUserCriteria] = useState(
-    mockCriteria.map(({ criterion }) => ({ criterion, rating: 0 }))
+    criteria.map(({ criterion }) => ({ criterion, rating: 0 }))
   )
   const [criteriaErrors, setCriteriaErrors] = useState(
-    mockCriteria.map(() => false)
+    criteria.map(() => false)
   )
   const [userText, setUserText] = useState('')
   const [isUserAnonymous, setIsUserAnonymous] = useState(false)

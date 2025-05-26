@@ -16,8 +16,26 @@
 
 .module {
   display: flex;
-  width: 291px;
   gap: 8px;
+}
+
+.additional-info {
+  display: flex;
+  gap: 40px;
+}
+
+.format {
+  width: 360px;
+  text-align: right;
+}
+
+.control-type {
+  width: 230px;
+  text-align: right;
+}
+
+.criteria-container {
+  margin-right: 32px;
 }
 
 .card-rating {
@@ -40,7 +58,7 @@
 }
 
 .card-meta p {
-  color: var(--color-light-black);
+  color: var(--color-gray);
   font-weight: 600;
   font-size: 18px;
   margin-bottom: 0;
@@ -109,4 +127,30 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.teachers-error {
+  color: var(--color-gray);
+  margin-left: auto;
+}
+
+.review-cards {
+  margin: 24px 0;
+}
+
+html:has(.blur-overlay) {
+  overflow: hidden;
+}
+
+.blur-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  background: rgba(17, 17, 17, 0.05);
+  z-index: 1001;
+  pointer-events: none;
 }

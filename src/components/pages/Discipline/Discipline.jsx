@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import bookIcon from '../../../assets/icons/book.svg'
 import styles from './discipline.module.css'
-import {
-  useGetCriteriaByDisciplineQuery,
-  useGetDisciplineInfoQuery,
-  useGetReviewsByDisciplineQuery,
-} from '../../../api/disciplineApi'
+// import {
+//   useGetCriteriaByDisciplineQuery,
+//   useGetDisciplineInfoQuery,
+//   useGetReviewsByDisciplineQuery,
+// } from '../../../api/disciplineApi'
 import { useParams } from 'react-router'
 import CriterionRating from '../../ui/CriterionRating/CriterionRating'
 import crownIcon from '../../../assets/icons/crown.svg'
@@ -14,15 +14,21 @@ import teacherIcon from '../../../assets/icons/Icon.svg'
 import arrowIcon from '../../../assets/icons/icon2.svg'
 import ReviewsTitle from '../../ui/ReviewsTitle'
 import ReviewForm from '../../ui/ReviewForm'
+import ReviewCard from '../../ui/ReviewCard'
+import {
+  mockCriteriaData,
+  mockDisciplineData,
+  mockReviewsData,
+} from '../../../mocks/reviews.mock'
 
 export default function Discipline() {
   const { id } = useParams()
-  const { data: disciplineData, error: disciplineError } =
-    useGetDisciplineInfoQuery(id)
-  const { data: criteriaData } = useGetCriteriaByDisciplineQuery(id)
-  const { data: reviewsData } = useGetReviewsByDisciplineQuery({
-    disciplineId: id,
-  })
+  // const { data: disciplineData, error: disciplineError } =
+  //   useGetDisciplineInfoQuery(id)
+  // const { data: criteriaData } = useGetCriteriaByDisciplineQuery(id)
+  // const { data: reviewsData } = useGetReviewsByDisciplineQuery({
+  //   disciplineId: id,
+  // })
 
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false)
 
@@ -31,22 +37,26 @@ export default function Discipline() {
       <div className={styles['card-discipline']}>
         <div className={styles['card-header']}>
           <div>
-            <h1 className={styles['card-title']}>
-              {disciplineData?.name || 'Название дисциплины'}
-            </h1>
+            <h1 className={styles['card-title']}>{mockDisciplineData?.name}</h1>
           </div>
           <div className={styles['card-rating']}>
             <p>Общая оценка:</p>
-            <p>{disciplineData?.['average_rating'] || '3,6'}</p>
+            <p>{mockDisciplineData?.['average_rating']}</p>
           </div>
         </div>
         <div className={styles['card-meta']}>
           <div className={styles.module}>
             <img src={bookIcon} alt="Иконка книги" className={styles.icon} />
-            <p>Модуль: {disciplineData?.module || 'название модуля'}</p>
+            <p>Модуль: {mockDisciplineData?.module}</p>
           </div>
-          <p>Формат проведения: {disciplineData?.format || 'традиционная'}</p>
-          <p>Тип контроля: {disciplineData?.['control_type'] || 'зачет'}</p>
+          <div className={styles['additional-info']}>
+            <p className={styles.format}>
+              Формат проведения: {mockDisciplineData?.format}
+            </p>
+            <p className={styles['control-type']}>
+              Тип контроля: {mockDisciplineData?.['control_type']}
+            </p>
+          </div>
         </div>
       </div>
 
@@ -55,25 +65,16 @@ export default function Discipline() {
           <img src={crownIcon} alt="Иконка короны" className={styles['icon']} />
           <h3 className={styles['card-subtitle']}>Критерии качества</h3>
         </div>
-        <CriterionRating
-          rating={3.6}
-          showNumberRating={true}
-          criterionName="Интересность дисциплины"
-        />
-        <CriterionRating
-          rating={3.6}
-          showNumberRating={true}
-          criterionName="Уровень сложности"
-        />
-
-        {/* {criteriaData.map(({ average_rating, criterion }, index) => (
-          <CriterionRating
-            key={index}
-            rating={average_rating}
-            showNumberRating={true}
-            criterionName={criterion}
-          />
-        ))} */}
+        <div className={styles['criteria-container']}>
+          {mockCriteriaData.map(({ average_rating, criterion }, index) => (
+            <CriterionRating
+              key={index}
+              rating={average_rating}
+              showNumberRating={true}
+              criterionName={criterion}
+            />
+          ))}
+        </div>
       </div>
 
       <div className={styles.card}>
@@ -82,12 +83,10 @@ export default function Discipline() {
           <h3 className={styles['card-subtitle']}>Описание</h3>
         </div>
         <p className={styles['description']}>
-          {disciplineData?.description ||
-            ' Lorem Ipsum - это текст-рыба, часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной рыбой для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов. Lorem Ipsum не только успешно пережил без заметных изменений пять веков, но и перешагнул в электронный дизайн. Его популяризации в новое время послужили публикация листов Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum.'}
+          {mockDisciplineData?.description}
         </p>
         <p className={styles['last-updated']}>
-          Дата последнего изменения:{' '}
-          {disciplineData?.['last_update'] || '22.04.2025'}
+          Дата последнего изменения: {mockDisciplineData?.['last_update']}
         </p>
       </div>
 
@@ -97,43 +96,49 @@ export default function Discipline() {
         >
           <img src={teacherIcon} alt="Иконка шляпы" className={styles.icon} />
           <h3 className={styles['card-subtitle']}>Преподаватели</h3>
-          <span className={styles['toggle-button']}>
-            {disciplineError ? (
-              'Информация о преподавателях временно недоступна'
-            ) : (
-              <img src={arrowIcon} alt="Открывающая стрелка вниз" />
-            )}
-          </span>
-        </summary>
-        {!disciplineError && (
-          <ul className={styles['teachers']}>
-            <li>Фамилия Имя Отчество</li>
-            <li>Фамилия Имя Отчество</li>
-            <li>Фамилия Имя Отчество</li>
-            <li>Фамилия Имя Отчество</li>
 
-            {/* {disciplineData?.teachers.map((teacher, index) => (
-            <li key={index}>{teacher}</li>
-          ))} */}
+          {!mockDisciplineData.teachers.length > 0 ? (
+            <span className={styles['teachers-error']}>
+              Информация о преподавателях временно недоступна
+            </span>
+          ) : (
+            <span className={styles['toggle-button']}>
+              <img src={arrowIcon} alt="Открывающая стрелка вниз" />
+            </span>
+          )}
+        </summary>
+        {mockDisciplineData.teachers.length > 0 && (
+          <ul className={styles['teachers']}>
+            {mockDisciplineData?.teachers.map((teacher, index) => (
+              <li key={index}>{teacher}</li>
+            ))}
           </ul>
         )}
       </details>
 
       <div className="reviews">
         <ReviewsTitle
-          commentsCount={reviewsData?.['total_comments']}
+          commentsCount={mockReviewsData?.['total_comments']}
           handleOpenReviewForm={() => setIsReviewFormOpen(true)}
         />
+
+        <div className={styles['review-cards']}>
+          {mockReviewsData?.comments.slice(0, 3).map((reviewData, index) => (
+            <ReviewCard key={index} reviewData={reviewData} />
+          ))}
+        </div>
       </div>
 
       {isReviewFormOpen && (
         <ReviewForm
           disciplineName="Название дисциплины"
           disciplineId={id}
-          criteria={criteriaData}
+          criteria={mockCriteriaData}
           handleCloseReviewForm={() => setIsReviewFormOpen(false)}
         />
       )}
+
+      {isReviewFormOpen && <div className={styles['blur-overlay']} />}
     </>
   )
 }

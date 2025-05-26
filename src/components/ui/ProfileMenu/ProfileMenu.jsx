@@ -5,7 +5,7 @@ import Profile from '../Profile'
 import ChangePassword from '../ChangePassword'
 import ChangeInfo from '../ChangeInfo'
 
-export default function ProfileInfo() {
+export default function ProfileMenu() {
   const [currentView, setCurrentView] = useState(ProfileView.PROFILE_INFO)
 
   switch (currentView) {

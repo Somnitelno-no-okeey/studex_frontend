@@ -1,0 +1,51 @@
+.discipline-rating {
+  display: flex;
+  margin-bottom: 32px;
+  margin-top: 25px;
+}
+
+.discipline-page {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.discipline-page-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.rating-grade {
+  display: flex;
+  margin-left: auto;
+  gap: 16px;
+}
+
+.rating-grade p {
+  font-weight: 600;
+  font-size: 24px;
+  color: var(--color-main);
+  margin-bottom: 0;
+}
+
+.review-cards {
+  margin: 24px 0;
+}
+
+html:has(.blur-overlay) {
+  overflow: hidden;
+}
+
+.blur-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  background: rgba(17, 17, 17, 0.05);
+  z-index: 1001;
+  pointer-events: none;
+}

@@ -4,10 +4,16 @@
   color: var(--color-main);
   width: 410px;
   border-radius: var(--radius-XXL);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 40px 24px;
   margin: auto;
+  position: absolute;
+  z-index: 1000;
+  top: 53px;
+  right: 48px;
 }

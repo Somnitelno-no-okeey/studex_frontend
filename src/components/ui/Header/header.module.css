@@ -1,9 +1,12 @@
 header {
-  padding: 8px 41px;
+  padding: 10px 48px;
   border-bottom: 1px solid var(--color-dark-white);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background: var(--color-white);
+  position: relative;
+  z-index: 1000;
 }
 
 .logo {
@@ -18,4 +21,21 @@ header {
   border-radius: 100px;
   background-color: var(--color-dark-white);
   padding: 6px;
+}
+
+html:has(.blur-overlay) {
+  overflow: hidden;
+}
+
+.blur-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  background: rgba(17, 17, 17, 0.05);
+  z-index: 999;
+  pointer-events: none;
 }

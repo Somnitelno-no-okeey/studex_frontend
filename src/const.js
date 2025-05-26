@@ -22,4 +22,16 @@ const VerifyMode = {
   REGISTER: 'register',
 }
 
-export { RegistrationStep, VerificationStep, ProfileView, VerifyMode }
+const reviewSorting = [
+  { name: 'Дате', value: 'date' },
+  { name: 'Рейтингу', value: 'rating' },
+  { name: 'Полезности', value: 'useful' },
+]
+
+export {
+  RegistrationStep,
+  VerificationStep,
+  ProfileView,
+  VerifyMode,
+  reviewSorting,
+}

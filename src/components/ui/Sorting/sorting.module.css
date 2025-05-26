@@ -1,0 +1,59 @@
+.sort-form {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-left: 32px;
+}
+.sort-form .label {
+  font-weight: 600;
+  font-size: 18px;
+  margin-right: 16px;
+}
+
+.sort-label {
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--color-light-black);
+}
+
+.sort-label:first-child {
+  margin: 0;
+}
+
+.sort-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  padding-right: 28px;
+}
+
+.sort-option input {
+  display: none;
+}
+
+.sort-option span {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 26px;
+  color: var(--color-light-main);
+
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.sort-option .sort-icon {
+  display: none;
+  width: 24px;
+  height: 24px;
+}
+
+.sort-option:has(input:checked) {
+  background: url('../../../assets/icons/arrow-up.svg') no-repeat right center;
+}
+
+.sort-option input:checked + span {
+  color: var(--color-main);
+  text-decoration: none;
+}
