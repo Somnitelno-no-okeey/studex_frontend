@@ -13,6 +13,7 @@
   font-weight: 600;
   font-size: 18px;
   color: var(--color-gray);
+  text-align: left;
 }
 
 .criterion-name-container .error-criterion {

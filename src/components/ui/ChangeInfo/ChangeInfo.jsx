@@ -9,13 +9,18 @@ import {
 import { useChangeUserInfoMutation } from '../../../api/changeDataApi'
 import { ProfileView } from '../../../const'
 import styles from './change-info.module.css'
+import { useSelector } from 'react-redux'
 
 export default function ChangeInfo({ handleNavigate }) {
+  const { user } = useSelector((state) => state.authSlice)
   const [changeUserInfo, { isLoading }] = useChangeUserInfoMutation()
   const [userInfo, setUserInfo] = useState({
-    name: '',
-    surname: '',
-    patronymic: '',
+    name:
+      (user?.['first_name'] === 'Пользователь' ? '' : user?.['first_name']) ||
+      '',
+    surname:
+      (user?.['last_name'] === 'Неизвестный' ? '' : user?.['last_name']) || '',
+    patronymic: user?.patronymic || '',
   })
 
   const [errors, setErrors] = useState({

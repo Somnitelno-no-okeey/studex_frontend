@@ -23,10 +23,10 @@ export default function Profile({ handleNavigate }) {
           className={styles['user-icon']}
         />
         <div>
-          <p className={styles['user-name']}>{user?.name || 'UserName'}</p>
-          <p className={styles['examle-mail']}>
-            {user?.email || 'example@gmail.com'}
+          <p className={styles['user-name']}>
+            {user?.['last_name']} {user?.['first_name']} {user?.patronymic}
           </p>
+          <p className={styles['examle-mail']}>{user?.email}</p>
         </div>
       </div>
 

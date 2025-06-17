@@ -5,7 +5,7 @@ import CompletedMessage from '../../ui/CompletedMessage'
 import Verify from '../../ui/Verify'
 import ResetPasswordForm from '../../ui/ResetPasswordForm'
 import SetNewPasswordForm from '../../ui/SetNewPasswordForm'
-import { useNavigate, useSearchParams } from 'react-router'
+import { useSearchParams } from 'react-router'
 import {
   reset,
   setEmail,
@@ -14,18 +14,14 @@ import {
 } from '../../../features/verifySlice'
 
 export default function ResetPassword() {
-  const { user, isAuthenticated } = useSelector((state) => state.authSlice)
+  const { user } = useSelector((state) => state.authSlice)
+  console.log(user)
   const { email, isVerified, mode } = useSelector((state) => state.verifySlice)
   const [searchParams, setSearchParams] = useSearchParams()
   const step = searchParams.get('step') || VerificationStep.EMAIL_FORM
   const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/')
-    }
-
     if (mode !== VerifyMode.RESET_PASSWORD) {
       dispatch(reset())
       dispatch(setMode(VerifyMode.RESET_PASSWORD))
@@ -35,12 +31,17 @@ export default function ResetPassword() {
       dispatch(setEmail(user.email))
       goToStep(VerificationStep.EMAIL_VERIFICATION)
     }
-  }, [])
+  }, [user, mode])
 
   useEffect(() => {
     if (step === VerificationStep.EMAIL_VERIFICATION && !email) {
       goToStep(VerificationStep.EMAIL_FORM)
     }
+
+    if (step === VerificationStep.SET_PASSWORD && !isVerified) {
+      goToStep(VerificationStep.EMAIL_VERIFICATION)
+    }
+
     if (step === VerificationStep.COMPLETED && !isVerified) {
       goToStep(VerificationStep.EMAIL_VERIFICATION)
     }

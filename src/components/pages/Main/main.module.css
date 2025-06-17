@@ -47,3 +47,36 @@
   flex-direction: column;
   gap: 16px;
 }
+
+.pagination {
+  display: flex;
+  gap: 8px;
+  margin: auto auto 23.5px auto;
+}
+
+.pagination button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-dark-white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination button:disabled {
+  opacity: 50%;
+}
+
+.blur-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  background: rgba(17, 17, 17, 0.05);
+  z-index: 1005;
+  pointer-events: none;
+}

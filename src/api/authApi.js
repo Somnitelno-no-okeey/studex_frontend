@@ -63,7 +63,7 @@ export const authApi = baseApi.injectEndpoints({
     }),
 
     getProfile: builder.query({
-      query: () => '/auth/profile',
+      query: () => '/auth/profile/',
 
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {

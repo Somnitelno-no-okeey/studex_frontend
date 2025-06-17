@@ -16,8 +16,8 @@ export default React.memo(function InputCriterion({
           className={`${styles['criterion-name']} ${error ? styles['error-criterion'] : ''}`}
         >
           {criterion.criterion}
+          <span>*</span>
         </p>
-        <span>*</span>
       </div>
       <div className={styles['inputs-container']}>
         {Array.from({ length: 5 }).map((_, index) => {

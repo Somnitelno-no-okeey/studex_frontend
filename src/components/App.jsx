@@ -4,15 +4,11 @@ import { Outlet } from 'react-router'
 import { useGetProfileQuery } from '../api/authApi'
 
 export default function App() {
-  const { user, accessToken, isAuthenticated } = useSelector(
-    (state) => state.authSlice
-  )
+  const { accessToken } = useSelector((state) => state.authSlice)
 
-  if (accessToken && !isAuthenticated) {
-    if (user && !user.isVerify) return
-
-    useGetProfileQuery()
-  }
+  useGetProfileQuery(undefined, {
+    skip: !accessToken,
+  })
 
   return <Outlet />
 }

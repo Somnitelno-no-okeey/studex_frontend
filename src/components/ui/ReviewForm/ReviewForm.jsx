@@ -22,9 +22,7 @@ export default function ReviewForm({
 
   const [sendReview, { isLoading }] = useSendReviewMutation()
 
-  const onSubmit = async (evt) => {
-    evt.preventDefault()
-
+  const onSubmit = async () => {
     const newErrors = userCriteria.map((criterion) => criterion.rating === 0)
     setCriteriaErrors(newErrors)
 

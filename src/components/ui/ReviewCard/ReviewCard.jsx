@@ -12,12 +12,10 @@ export default function ReviewCard({ reviewData }) {
           alt="Иконка пользователя"
           className={styles['users-icon']}
         />
-        <p className={styles['review-author']}>
-          {reviewData?.['student_name'] || 'Фамилия Имя Отчество'}
-        </p>
+        <p className={styles['review-author']}>{reviewData?.user}</p>
         <p className={styles['review-rating']}>Общая оценка:</p>
         <p className={styles['rating-value-mini']}>
-          {reviewData?.['average_rating'] || '3,6'}
+          {reviewData?.['avg_rating']}
         </p>
       </div>
 
@@ -37,9 +35,9 @@ export default function ReviewCard({ reviewData }) {
 
       <div className={styles['review-footer']}>
         <p className={styles['review-date']}>
-          Дата публикации: {reviewData?.['published_at'] || '13.05.25'}
+          Дата публикации: {reviewData?.['created_at']}
         </p>
-        <p className={styles['opinion']}>Был ли отзыв полезен?</p>
+        {/* <p className={styles['opinion']}>Был ли отзыв полезен?</p>
         <button>
           <svg
             width="24"
@@ -75,7 +73,7 @@ export default function ReviewCard({ reviewData }) {
               fill="#DDDDDD"
             />
           </svg>
-        </button>
+        </button> */}
       </div>
     </div>
   )

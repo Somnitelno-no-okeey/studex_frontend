@@ -12,14 +12,14 @@ export default function DisciplineCard({ disciplineData }) {
     >
       <div className={styles['discipline-info']}>
         <img src={bookIcon} alt="Иконка книги" className={styles.icon} />
-        <p className={styles['discipline-title']}>Название дисциплины</p>
+        <p className={styles['discipline-title']}>{disciplineData?.name}</p>
         <div className={styles['main-discipline-rating']}>
           <CriterionRating
-            rating={disciplineData['average_rating']}
+            rating={disciplineData?.['avg_rating']}
             showOnlyStars={true}
           />
           <p className={styles['rating-value-medium']}>
-            {disciplineData['average_rating']}
+            {disciplineData?.['average_rating']}
           </p>
           <div className={styles['review-count']}>
             <svg
@@ -34,17 +34,17 @@ export default function DisciplineCard({ disciplineData }) {
                 fill="#999999"
               />
             </svg>
-            <p>{disciplineData['review_count']}</p>
+            <p>{disciplineData?.['review_count']}</p>
             <p>оценок</p>
           </div>
         </div>
       </div>
       <div className={styles['discipline-meta']}>
         <div className={styles['discipline-details']}>
-          <p>Модуль: {disciplineData.module}</p>
+          <p>Модуль: {disciplineData?.module}</p>
           <div className={styles['additional-option']}>
-            <p>Формат проведения: {disciplineData.format}</p>
-            <p>Тип контроля: {disciplineData['control_type']}</p>
+            <p>Формат проведения: {disciplineData?.format}</p>
+            <p>Тип контроля: {disciplineData?.['control_type']}</p>
           </div>
         </div>
       </div>

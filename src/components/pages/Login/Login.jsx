@@ -65,7 +65,7 @@ export default function Login() {
             value={password}
           />
 
-          <Link to="/" className={styles.link}>
+          <Link to="/reset-password" className={styles.link}>
             Забыли пароль?
           </Link>
         </div>

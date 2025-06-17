@@ -17,7 +17,7 @@ const authSlice = createSlice({
 
     setUser: (state, action) => {
       state.user = action.payload
-      state.isAuthenticated = state.user.isVerify
+      state.isAuthenticated = state.user['is_verificated']
     },
 
     logout: (state) => {

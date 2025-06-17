@@ -20,6 +20,7 @@
 }
 
 .sort-option {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -48,8 +49,25 @@
   height: 24px;
 }
 
-.sort-option:has(input:checked) {
-  background: url('../../../assets/icons/arrow-up.svg') no-repeat right center;
+.sort-option:has(input:checked)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  background: url('../../../assets/icons/arrow-up.svg') no-repeat center;
+}
+
+.sort-option.asc:has(input:checked)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  background: url('../../../assets/icons/arrow-up.svg') no-repeat center;
+  transform: rotate(180deg);
 }
 
 .sort-option input:checked + span {

@@ -120,3 +120,7 @@ p {
 .email-input-form div:has(input[type='email']) {
   margin: 1.25rem 0;
 }
+
+.form {
+  margin-bottom: 0.75rem;
+}

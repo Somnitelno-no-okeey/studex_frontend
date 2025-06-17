@@ -12,7 +12,7 @@ export const changeDataApi = baseApi.injectEndpoints({
 
     ChangePassword: builder.mutation({
       query: ({ oldPassord, newPassword }) => ({
-        url: '/change-password',
+        url: '/auth/change-password/',
         method: 'POST',
         body: { oldPassord, newPassword },
       }),
@@ -20,7 +20,7 @@ export const changeDataApi = baseApi.injectEndpoints({
 
     changeUserInfo: builder.mutation({
       query: ({ name, surname, patronymic = null }) => ({
-        url: '/change-info',
+        url: '/auth/update-fullname/',
         method: 'POST',
         body: { name, surname, patronymic },
       }),

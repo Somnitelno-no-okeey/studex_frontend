@@ -13,6 +13,7 @@ import {
 import { useVerifyTimer } from '../../../hooks/useVerifyTimer'
 import verifyStyles from './verify.module.css'
 import { VerifyMode } from '../../../const'
+import { useSelector } from 'react-redux'
 
 export default function Verify({
   setStep,
@@ -20,6 +21,7 @@ export default function Verify({
   handleSubmit,
   mode = VerifyMode.REGISTER,
 }) {
+  const { isAuthenticated } = useSelector((state) => state.authSlice)
   const [code, setCode] = useState(['', '', '', '', '', ''])
   const { codeTimeout, startNewTimer, resetTimer } = useVerifyTimer(email)
 
@@ -56,10 +58,10 @@ export default function Verify({
   }
 
   useEffect(() => {
-    if (mode === VerifyMode.RESET_PASSWORD) {
+    if (mode === VerifyMode.RESET_PASSWORD && isAuthenticated) {
       requestCodeToEmail()
     }
-  }, [])
+  }, [isAuthenticated])
 
   const onSubmit = async (evt) => {
     evt.preventDefault()

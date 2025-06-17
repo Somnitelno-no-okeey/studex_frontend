@@ -5,12 +5,12 @@ import SubmitButton from '../SubmitButton'
 import styles from '../../../styles/auth.module.css'
 import { useNavigate } from 'react-router'
 import { validateEmail } from '../../../utils/validator.util.js'
-import { useSendVerifyCodeMutation } from '../../../api/authApi.js'
+import { useSendResetPasswordVerifyCodeMutation } from '../../../api/authApi.js'
 
 export default function ResetPasswordForm({ setStep, email, setEmail }) {
   const navigate = useNavigate()
   const [emailError, setEmailError] = useState()
-  const [requestCode, { isLoading }] = useSendVerifyCodeMutation()
+  const [requestCode, { isLoading }] = useSendResetPasswordVerifyCodeMutation()
 
   const onSubmit = async (evt) => {
     evt.preventDefault()

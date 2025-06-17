@@ -60,7 +60,7 @@ export default function RegisterForm({ setStep, setUserEmail }) {
   return (
     <AuthLayout>
       <h1>Регистрация</h1>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} className={styles.form}>
         <p>
           Введите вашу почту в домене @urfu.me и пароль для создания аккаунта
         </p>
@@ -92,12 +92,12 @@ export default function RegisterForm({ setStep, setUserEmail }) {
             value={confirmedPassword}
             setPassword={setConfirmedPassword}
           />
-        </div>
 
-        <p className={`${styles.hint} ${passwordError && styles.error}`}>
-          Пароль должен содержать не менее 8 символов, включая латинские буквы
-          (a-z, A-Z), как минимум одну заглавную букву и одну цифру
-        </p>
+          <p className={`${styles.hint} ${passwordError && styles.error}`}>
+            Пароль должен содержать не менее 8 символов, включая латинские буквы
+            (a-z, A-Z), как минимум одну заглавную букву и одну цифру
+          </p>
+        </div>
 
         <SubmitButton
           textContent="Получить код подтверждения"

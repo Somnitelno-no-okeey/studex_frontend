@@ -2,42 +2,63 @@ import { baseApi } from './baseApi'
 
 export const disciplineApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getDisciplineInfo: builder.query({
-      query: (id) => ({
-        url: `/disciplines/${id}`,
+    getDisciplines: builder.query({
+      query: ({
+        page = 1,
+        sortBy = '',
+        order = '',
+        rating = '',
+        modules = '',
+        control_type = '',
+        discipline_formats = '',
+        search = '',
+      }) => ({
+        url: `/disciplines/?page=${page}&sort_by=${sortBy}&order=${order}&rating=${rating}&module=${modules}&control_type=${control_type}&discipline_format=${discipline_formats}&search=${search}`,
       }),
     }),
 
-    getCriteriaByDiscipline: builder.query({
-      query: (DisciplineId) => ({
-        url: `/disciplines/${DisciplineId}/criteria`,
+    getDisciplineInfo: builder.query({
+      query: (id) => ({
+        url: `/disciplines/${id}/`,
       }),
     }),
 
     getReviewsByDiscipline: builder.query({
-      query: ({ DisciplineId, page = 1, sort = '', sortBy = '' }) => ({
-        url: `/disciplines/${DisciplineId}/comments?page=${page}&sort=${sort}&sort_by=${sortBy}`,
+      query: ({ disciplineId, page = 1, sortBy = '', order = '' }) => ({
+        url: `/disciplines/${disciplineId}/reviews/?page=${page}&sort_by=${sortBy}&order=${order}`,
       }),
+
+      providesTags: ['Reviews'],
     }),
 
     sendReview: builder.mutation({
       query: ({ disciplineId, isAnonymous, text, criteria }) => ({
-        url: '/reviews',
+        url: `/disciplines/${disciplineId}/reviews/`,
         method: 'POST',
         body: {
-          discipline_id: disciplineId,
-          is_anonymous: isAnonymous,
-          text,
+          anonymous: isAnonymous,
+          comment: text,
           criteria,
         },
+      }),
+
+      invalidatesTags: ['Reviews'],
+    }),
+
+    getModules: builder.query({
+      query: () => ({
+        url: '/disciplines/modules/',
       }),
     }),
   }),
 })
 
 export const {
+  useGetDisciplinesQuery,
+  useLazyGetDisciplinesQuery,
   useGetDisciplineInfoQuery,
-  useGetCriteriaByDisciplineQuery,
   useGetReviewsByDisciplineQuery,
+  useLazyGetReviewsByDisciplineQuery,
   useSendReviewMutation,
+  useGetModulesQuery,
 } = disciplineApi

@@ -25,12 +25,22 @@ const VerifyMode = {
 const reviewSorting = [
   { name: 'Дате', value: 'date' },
   { name: 'Рейтингу', value: 'rating' },
-  { name: 'Полезности', value: 'useful' },
 ]
 
 const disciplineSorting = [
   { name: 'Общей оценке', value: 'rating' },
-  { name: 'По количестсву отзывов', value: 'reviews' },
+  { name: 'По количестсву отзывов', value: 'comment_count' },
+]
+
+const disciplineFormats = [
+  { name: 'Традиционная', value: 'traditional' },
+  { name: 'Смешанная', value: 'blended' },
+  { name: 'Онлайн', value: 'online' },
+]
+
+const disciplineTypes = [
+  { name: 'Зачет', value: 'credit' },
+  { name: 'Экзамен', value: 'exam' },
 ]
 
 export {
@@ -40,4 +50,6 @@ export {
   VerifyMode,
   reviewSorting,
   disciplineSorting,
+  disciplineFormats,
+  disciplineTypes,
 }
