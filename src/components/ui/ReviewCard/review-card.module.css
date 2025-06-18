@@ -110,3 +110,21 @@
   width: 24px;
   height: 24px;
 }
+
+.btn-wrapper {
+  margin-left: 140px;
+  display: flex;
+  gap: 8px;
+}
+
+.btn-wrapper button {
+  transition: var(--transition);
+}
+
+.btn-wrapper .edit:hover svg path {
+  fill: var(--color-main);
+}
+
+.btn-wrapper .delete:hover svg path {
+  fill: var(--color-dangerous);
+}

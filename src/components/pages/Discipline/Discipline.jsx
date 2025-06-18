@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import bookIcon from '../../../assets/icons/book.svg'
 import styles from './discipline.module.css'
 import {
+  useDeleteReviewMutation,
   useGetDisciplineInfoQuery,
   useGetReviewsByDisciplineQuery,
+  useGetUserReviewQuery,
+  useLazyGetReviewByIdQuery,
 } from '../../../api/disciplineApi'
 import { useNavigate, useParams } from 'react-router'
 import CriterionRating from '../../ui/CriterionRating/CriterionRating'
@@ -15,6 +18,7 @@ import ReviewsTitle from '../../ui/ReviewsTitle'
 import ReviewForm from '../../ui/ReviewForm'
 import ReviewCard from '../../ui/ReviewCard'
 import { useSelector } from 'react-redux'
+import DeleteMessage from '../../ui/DeleteMessage/DeleteMessage'
 
 export default function Discipline() {
   const { id } = useParams()
@@ -26,11 +30,46 @@ export default function Discipline() {
       disciplineId: id,
     })
 
+  const { data: userReviewId } = useGetUserReviewQuery({ disciplineId: id })
+  const [getReviewById] = useLazyGetReviewByIdQuery()
+
+  const [deleteReview] = useDeleteReviewMutation()
+
   const navigate = useNavigate()
 
   const { isAuthenticated } = useSelector((state) => state.authSlice)
 
+  const [userReview, setUserReview] = useState('')
+
   const [isReviewFormOpen, setIsReviewFormOpen] = useState(false)
+  const [isReviewUpdateFormOpen, setIsReviewUpdateFormOpen] = useState(false)
+  const [isDeleteMessageOpen, setIsDeleteMessageOpen] = useState(false)
+
+  const getReview = async (reviewId) => {
+    try {
+      const userReview = await getReviewById({
+        disciplineId: id,
+        id: reviewId,
+      }).unwrap()
+      setUserReview(userReview)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const onDeleteReview = async () => {
+    try {
+      await deleteReview({ disciplineId: id, id: userReviewId['review_id'] })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    if (userReviewId?.['review_id']) {
+      getReview(userReviewId['review_id'])
+    }
+  }, [userReviewId])
 
   if (!isDisciplineLoading && !isReviewsLoading) {
     return (
@@ -131,9 +170,22 @@ export default function Discipline() {
           />
 
           <div className={styles['review-cards']}>
-            {reviewsData?.results.slice(0, 3).map((reviewData) => (
-              <ReviewCard key={reviewData.id} reviewData={reviewData} />
-            ))}
+            {userReview && (
+              <ReviewCard
+                reviewData={userReview}
+                isUserReview={true}
+                onEditClick={() => setIsReviewUpdateFormOpen(true)}
+                onDeleteClick={() => setIsDeleteMessageOpen(true)}
+              />
+            )}
+            {reviewsData?.results
+              .slice(0, 3)
+              .map(
+                (reviewData) =>
+                  reviewData.id !== userReviewId['review_id'] && (
+                    <ReviewCard key={reviewData.id} reviewData={reviewData} />
+                  )
+              )}
           </div>
         </div>
 
@@ -146,7 +198,28 @@ export default function Discipline() {
           />
         )}
 
-        {isReviewFormOpen && <div className={styles['blur-overlay']} />}
+        {isReviewUpdateFormOpen && (
+          <ReviewForm
+            disciplineName={disciplineData?.name}
+            disciplineId={id}
+            id={userReviewId['review_id']}
+            criteria={userReview?.criteria}
+            isUpdateformMode={true}
+            reviewData={userReview}
+            handleCloseReviewForm={() => setIsReviewUpdateFormOpen(false)}
+          />
+        )}
+
+        {isDeleteMessageOpen && (
+          <DeleteMessage
+            onClose={() => setIsDeleteMessageOpen(false)}
+            onDelete={onDeleteReview}
+          />
+        )}
+
+        {(isReviewFormOpen ||
+          isReviewUpdateFormOpen ||
+          isDeleteMessageOpen) && <div className={styles['blur-overlay']} />}
       </>
     )
   }

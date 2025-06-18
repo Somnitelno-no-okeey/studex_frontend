@@ -53,3 +53,46 @@ html:has(.blur-overlay) {
 .reviews .sorting-wrapper {
   margin-left: 32px;
 }
+
+.user-review {
+  margin-bottom: 8px;
+}
+
+.user-review-title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.user-review-title {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-left: 32px;
+}
+
+.user-review-title h3 {
+  color: var(--color-light-black);
+  margin-bottom: 0;
+}
+
+.btn-wrapper {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-wrapper button {
+  height: 48px;
+  width: 182px;
+  background: var(--color-main);
+  color: var(--color-white);
+  border-radius: var(--radius-M);
+  font-weight: 600;
+}
+
+.btn-wrapper button.delete {
+  width: 116px;
+  background: var(--color-dark-white);
+  color: var(--color-dangerous);
+  font-weight: 400;
+}

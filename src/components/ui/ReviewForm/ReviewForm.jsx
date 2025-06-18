@@ -3,26 +3,36 @@ import InputCriterion from '../inputCriterion'
 import { useState } from 'react'
 import styles from './review-from.module.css'
 import SubmitButton from '../SubmitButton'
-import { useSendReviewMutation } from '../../../api/disciplineApi'
+import {
+  useSendReviewMutation,
+  useUpdateReviewMutation,
+} from '../../../api/disciplineApi'
 
 export default function ReviewForm({
   disciplineName,
   criteria,
   disciplineId,
   handleCloseReviewForm,
+  isUpdateformMode = false,
+  id = '',
+  reviewData = '',
 }) {
   const [userCriteria, setUserCriteria] = useState(
-    criteria.map(({ criterion }) => ({ criterion, rating: 0 }))
+    criteria.map(({ criterion, rating }) =>
+      !isUpdateformMode ? { criterion, rating: 0 } : { criterion, rating }
+    )
   )
   const [criteriaErrors, setCriteriaErrors] = useState(
     criteria.map(() => false)
   )
-  const [userText, setUserText] = useState('')
+  const [userText, setUserText] = useState(reviewData?.comment || '')
   const [isUserAnonymous, setIsUserAnonymous] = useState(false)
 
-  const [sendReview, { isLoading }] = useSendReviewMutation()
+  const [sendReview, { isLoading: isSendLoading }] = useSendReviewMutation()
+  const [updateReview, { isLoading: isUpdateLoading }] =
+    useUpdateReviewMutation()
 
-  const onSubmit = async () => {
+  const onSubmitSend = async () => {
     const newErrors = userCriteria.map((criterion) => criterion.rating === 0)
     setCriteriaErrors(newErrors)
 
@@ -40,6 +50,29 @@ export default function ReviewForm({
       }
     }
   }
+
+  const onSubmitUpdate = async () => {
+    const newErrors = userCriteria.map((criterion) => criterion.rating === 0)
+    setCriteriaErrors(newErrors)
+
+    if (!newErrors.some((error) => error)) {
+      try {
+        await updateReview({
+          id,
+          disciplineId,
+          isAnonymous: isUserAnonymous,
+          text: userText,
+          criteria: userCriteria,
+        }).unwrap()
+        handleCloseReviewForm()
+      } catch (error) {
+        console.error(error)
+      }
+    }
+  }
+
+  const onSubmit = !isUpdateformMode ? onSubmitSend : onSubmitUpdate
+  const isLoading = !isUpdateformMode ? isSendLoading : isUpdateLoading
 
   return (
     <div className={styles['form-container']}>

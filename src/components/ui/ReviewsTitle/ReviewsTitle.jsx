@@ -8,6 +8,7 @@ export default function ReviewsTitle({
   commentsCount,
   handleOpenReviewForm,
   isSecondaryButtonVisible = true,
+  isMainButtonVisible = true,
 }) {
   return (
     <div className={styles['reviews-title']}>
@@ -18,11 +19,13 @@ export default function ReviewsTitle({
       </div>
 
       <div className={styles['reviews-buttons']}>
-        <SubmitButton
-          textContent="Написать отзыв"
-          customClass={styles['button']}
-          onClick={handleOpenReviewForm}
-        />
+        {isMainButtonVisible && (
+          <SubmitButton
+            textContent="Написать отзыв"
+            customClass={styles['button']}
+            onClick={handleOpenReviewForm}
+          />
+        )}
         {isSecondaryButtonVisible && (
           <Link to="reviews" className={styles['secondary-button']}>
             Посмотреть все отзывы

@@ -31,6 +31,47 @@ export const disciplineApi = baseApi.injectEndpoints({
       providesTags: ['Reviews'],
     }),
 
+    getUserReview: builder.query({
+      query: ({ disciplineId: discipline_id }) => ({
+        url: `/disciplines/${discipline_id}/user_review/`,
+      }),
+    }),
+
+    getReviewById: builder.query({
+      query: ({ disciplineId: discipline_id, id }) => ({
+        url: `/disciplines/${discipline_id}/reviews/${id}/`,
+      }),
+    }),
+
+    deleteReview: builder.mutation({
+      query: ({ disciplineId: discipline_id, id }) => ({
+        url: `/disciplines/${discipline_id}/reviews/${id}/delete/`,
+        method: 'DELETE',
+      }),
+
+      invalidatesTags: ['Reviews'],
+    }),
+
+    updateReview: builder.mutation({
+      query: ({
+        disciplineId: discipline_id,
+        id,
+        isAnonymous,
+        text,
+        criteria,
+      }) => ({
+        url: `/disciplines/${discipline_id}/reviews/${id}/update/`,
+        method: 'PUT',
+        body: {
+          anonymous: isAnonymous,
+          comment: text,
+          criteria,
+        },
+      }),
+
+      invalidatesTags: ['Reviews'],
+    }),
+
     sendReview: builder.mutation({
       query: ({ disciplineId, isAnonymous, text, criteria }) => ({
         url: `/disciplines/${disciplineId}/reviews/`,
@@ -59,6 +100,11 @@ export const {
   useGetDisciplineInfoQuery,
   useGetReviewsByDisciplineQuery,
   useLazyGetReviewsByDisciplineQuery,
+  useGetUserReviewQuery,
+  useGetReviewByIdQuery,
+  useLazyGetReviewByIdQuery,
+  useDeleteReviewMutation,
+  useUpdateReviewMutation,
   useSendReviewMutation,
   useGetModulesQuery,
 } = disciplineApi
