@@ -9,10 +9,20 @@ import QuestionIcon from '../../../assets/icons/message-question.svg'
 import { ProfileView } from '../../../const'
 import { useNavigate } from 'react-router'
 import { useSelector } from 'react-redux'
+import { useLogoutMutation } from '../../../api/authApi'
 
 export default function Profile({ handleNavigate }) {
   const navigate = useNavigate()
   const { user } = useSelector((state) => state.authSlice)
+  const [logout] = useLogoutMutation()
+
+  const onLogout = async () => {
+    try {
+      await logout().unwrap()
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   return (
     <ProfileLayout>
@@ -48,9 +58,15 @@ export default function Profile({ handleNavigate }) {
         />
       </div>
 
-      <button type="button" className={styles['logout-button']}>
-        Выйти
-      </button>
+      <form>
+        <button
+          type="submit"
+          className={styles['logout-button']}
+          onClick={onLogout}
+        >
+          Выйти
+        </button>
+      </form>
     </ProfileLayout>
   )
 }

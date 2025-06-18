@@ -39,3 +39,11 @@ html:has(.blur-overlay) {
   z-index: 999;
   pointer-events: none;
 }
+
+.link {
+  padding: 7px 15px;
+  border-radius: var(--radius-M);
+  background: var(--color-dark-white);
+  color: var(--color-main);
+  font-weight: 600;
+}
