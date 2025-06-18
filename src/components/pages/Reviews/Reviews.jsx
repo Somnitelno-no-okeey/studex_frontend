@@ -51,7 +51,7 @@ export default function Reviews() {
 
   const onDeleteReview = async () => {
     try {
-      await deleteReview({ disciplineId: id, id: userReviewId['review_id'] })
+      await deleteReview({ disciplineId: id, id: userReviewId?.['review_id'] })
     } catch (error) {
       console.error(error)
     }
@@ -210,7 +210,7 @@ export default function Reviews() {
           <div className={styles['review-cards']}>
             {reviews.map(
               (reviewData, index) =>
-                reviewData.id !== userReviewId['review_id'] && (
+                reviewData.id !== userReviewId?.['review_id'] && (
                   <ReviewCard key={index} reviewData={reviewData} />
                 )
             )}
