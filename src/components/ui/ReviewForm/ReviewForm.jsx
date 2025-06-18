@@ -26,13 +26,15 @@ export default function ReviewForm({
     criteria.map(() => false)
   )
   const [userText, setUserText] = useState(reviewData?.comment || '')
+  const [error, setError] = useState('')
   const [isUserAnonymous, setIsUserAnonymous] = useState(false)
 
   const [sendReview, { isLoading: isSendLoading }] = useSendReviewMutation()
   const [updateReview, { isLoading: isUpdateLoading }] =
     useUpdateReviewMutation()
 
-  const onSubmitSend = async () => {
+  const onSubmitSend = async (evt) => {
+    evt.preventDefault()
     const newErrors = userCriteria.map((criterion) => criterion.rating === 0)
     setCriteriaErrors(newErrors)
 
@@ -44,14 +46,17 @@ export default function ReviewForm({
           text: userText,
           criteria: userCriteria,
         }).unwrap()
+
         handleCloseReviewForm()
       } catch (error) {
         console.error(error)
+        setError(error)
       }
     }
   }
 
-  const onSubmitUpdate = async () => {
+  const onSubmitUpdate = async (evt) => {
+    evt.preventDefault()
     const newErrors = userCriteria.map((criterion) => criterion.rating === 0)
     setCriteriaErrors(newErrors)
 
@@ -120,12 +125,14 @@ export default function ReviewForm({
           <label className={styles['anonymous-label']}>
             <input
               type="checkbox"
-              checked={isUserAnonymous}
+              checked={isUserAnonymous || reviewData?.user === 'Аноним'}
               onChange={(evt) => setIsUserAnonymous(evt.target.checked)}
             />
           </label>
           <p>оставить отзыв анонимно</p>
         </div>
+
+        {error && <p className={styles.error}>{error.data.comment}</p>}
 
         <SubmitButton textContent="Оставить отзыв" isLoading={isLoading} />
         <button

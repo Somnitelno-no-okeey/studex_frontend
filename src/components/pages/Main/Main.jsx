@@ -29,11 +29,11 @@ export default function Main() {
 
   const [getDisciplines, { isLoading }] = useLazyGetDisciplinesQuery()
 
-  const getFilteredDisciplines = async () => {
+  const getFilteredDisciplines = async (customFilters = filtersParam) => {
     try {
       const filteredDisciplines = await getDisciplines({
         page,
-        ...filtersParam,
+        ...customFilters,
         sortBy: sortParam,
         order: orderSortParam,
       }).unwrap()
@@ -50,7 +50,21 @@ export default function Main() {
     setOrderSortParam(order)
   }
 
-  const onFiltersSubmit = async () => {
+  const onFiltersResetClick = () => {
+    const resetFilters = {
+      ...filtersParam,
+      rating: '',
+      modules: [],
+      control_type: '',
+      discipline_formats: [],
+    }
+
+    setFiltersParam(resetFilters)
+    setIsFiltersVisible(false)
+    getFilteredDisciplines(resetFilters)
+  }
+
+  const onFiltersSubmit = () => {
     setIsFiltersVisible(false)
 
     getFilteredDisciplines()
@@ -148,6 +162,7 @@ export default function Main() {
             onSubmit={onFiltersSubmit}
             filtersParam={filtersParam}
             setFiltersParam={setFiltersParam}
+            onResetClick={onFiltersResetClick}
           />
         )}
 

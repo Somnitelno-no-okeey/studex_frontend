@@ -9,6 +9,7 @@ export default function Filters({
   onSubmit,
   filtersParam,
   setFiltersParam,
+  onResetClick,
 }) {
   const { data: modulesData, isLoading: isModulesLoading } =
     useGetModulesQuery()
@@ -150,15 +151,7 @@ export default function Filters({
           </button>
           <button
             className={`${styles.btn} ${styles.reset}`}
-            onClick={() =>
-              setFiltersParam({
-                rating: '',
-                modules: [],
-                control_type: '',
-                discipline_formats: [],
-                search: '',
-              })
-            }
+            onClick={onResetClick}
           >
             Сбросить
           </button>

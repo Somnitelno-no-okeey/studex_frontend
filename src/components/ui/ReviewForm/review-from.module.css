@@ -110,3 +110,7 @@
   color: var(--color-dangerous);
   margin-bottom: 0;
 }
+
+p.error {
+  color: var(--color-dangerous);
+}

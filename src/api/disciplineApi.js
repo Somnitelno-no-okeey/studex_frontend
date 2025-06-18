@@ -13,7 +13,7 @@ export const disciplineApi = baseApi.injectEndpoints({
         discipline_formats = '',
         search = '',
       }) => ({
-        url: `/disciplines/?page=${page}&sort_by=${sortBy}&order=${order}&rating=${rating}&module=${modules}&control_type=${control_type}&discipline_format=${discipline_formats}&search=${search}`,
+        url: `/disciplines/?page=${page}&sort_by=${sortBy}&order=${order}&rating=${rating}&modules=${modules}&control_type=${control_type}&discipline_format=${discipline_formats}&search=${search}`,
       }),
     }),
 
@@ -21,6 +21,8 @@ export const disciplineApi = baseApi.injectEndpoints({
       query: (id) => ({
         url: `/disciplines/${id}/`,
       }),
+
+      providesTags: ['Reviews'],
     }),
 
     getReviewsByDiscipline: builder.query({
@@ -35,12 +37,16 @@ export const disciplineApi = baseApi.injectEndpoints({
       query: ({ disciplineId: discipline_id }) => ({
         url: `/disciplines/${discipline_id}/user_review/`,
       }),
+
+      providesTags: ['Reviews'],
     }),
 
     getReviewById: builder.query({
       query: ({ disciplineId: discipline_id, id }) => ({
         url: `/disciplines/${discipline_id}/reviews/${id}/`,
       }),
+
+      providesTags: ['Reviews'],
     }),
 
     deleteReview: builder.mutation({
