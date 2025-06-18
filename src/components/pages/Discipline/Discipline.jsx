@@ -167,6 +167,7 @@ export default function Discipline() {
               }
               setIsReviewFormOpen(true)
             }}
+            isMainButtonVisible={!userReviewId?.['review_id']}
           />
 
           <div className={styles['review-cards']}>
@@ -182,7 +183,8 @@ export default function Discipline() {
               .slice(0, 3)
               .map(
                 (reviewData) =>
-                  reviewData.id !== userReviewId['review_id'] && (
+                  (reviewData.id !== userReviewId?.['review_id'] ||
+                    !userReviewId?.['review_id']) && (
                     <ReviewCard key={reviewData.id} reviewData={reviewData} />
                   )
               )}

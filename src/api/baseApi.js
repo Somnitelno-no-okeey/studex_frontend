@@ -23,12 +23,12 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
       : typeof args?.url === 'string' && args.url.includes('/auth/refresh')
 
   if (result?.error?.status === 401 && !isRefreshingRequest) {
-    const refreshResult = await api.dispatch(
-      authApi.endpoints.refresh.initiate()
-    )
+    const refreshResult = await api
+      .dispatch(authApi.endpoints.refresh.initiate())
+      .unwrap()
 
-    if (refreshResult?.data?.accessToken) {
-      api.dispatch(setAccessToken(refreshResult.data.accessToken))
+    if (refreshResult?.access) {
+      api.dispatch(setAccessToken(refreshResult.access))
       result = await baseQuery(args, api, extraOptions)
     } else {
       api.dispatch(logout())

@@ -4,6 +4,7 @@ import userIcon from '../../../assets/icons/Users.svg'
 import { Link } from 'react-router'
 import ProfileMenu from '../ProfileMenu'
 import { useSelector } from 'react-redux'
+import loginIcon from '../../../assets/icons/login.svg'
 
 export default function Header() {
   const [isProfileMenuVisible, setIsProfileMenuVisible] = useState(false)
@@ -27,7 +28,7 @@ export default function Header() {
           </button>
         ) : (
           <Link to="/login" className={styles.link}>
-            Войти
+            <img src={loginIcon} />
           </Link>
         )}
 
